@@ -13,10 +13,13 @@
         "laravel/nova": "~4.0",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "llaski/nova-scheduled-jobs": "^5.0",
         "probablyrational/wasabi-storage": "^1.4",
         "spatie/browsershot": "^3.54",
         "spatie/dns": "^1.6",
-        "spatie/ssl-certificate": "^1.22"
+        "spatie/ssl-certificate": "^1.22",
+        "stepanenko3/nova-command-runner": "^4.1",
+        "stepanenko3/nova-logs-tool": "^1.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
