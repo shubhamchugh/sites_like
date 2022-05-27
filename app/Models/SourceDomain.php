@@ -11,6 +11,6 @@ class SourceDomain extends Model
 
     protected $fillable = [
         'domain',
-        'is_scrape',
+        'status',
     ];
 }

@@ -2,27 +2,35 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use KirschbaumDevelopment\Nova\InlineSelect;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class SourceDomain extends Resource
+class Technology extends Resource
 {
+
+    /**
+     * The logical group associated with the resource.
+     *
+     * @var string
+     */
+    public static $group = 'Post Management';
+
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\SourceDomain::class;
+    public static $model = \App\Models\Technology::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'domain';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -30,7 +38,7 @@ class SourceDomain extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'domain',
+        'id', 'name', 'website',
     ];
 
     /**
@@ -41,16 +49,18 @@ class SourceDomain extends Resource
      */
     public function fields(NovaRequest $request)
     {
-        $options = ['pending', 'success'];
         return [
             ID::make()->sortable(),
-            Text::make('domain')->sortable(),
-            InlineSelect::make('status')
-                ->options($options)
-                ->inlineOnIndex()
-                ->inlineOnDetail()
-                ->rules('required')
-                ->sortable(),
+            Text::make('Name', 'name')->sortable(),
+            Slug::make('Slug', 'slug')
+                ->from('name')
+                ->separator('-')
+                ->rules('required', 'alpha_dash', 'max:80')
+                ->creationRules('required', 'unique:technologies,slug'),
+            Text::make('Confidence', 'confidence'),
+            Text::make('Version', 'version'),
+            Text::make('Icon', 'icon'),
+            Text::make('Website', 'website'),
         ];
     }
 

@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\Cache\AllClearController;
 
 class ClearCacheCommand extends Command
 {
@@ -38,8 +38,9 @@ class ClearCacheCommand extends Command
      */
     public function handle()
     {
-        $url = route('clear');
-        Http::timeout(20)->get($url)->getBody();
-        $this->info('Successfully truncated all logs and cache You can use clear Manually using this URL:' . $url);
+        AllClearController::clear();
+        // $url = route('clear');
+        // Http::timeout(20)->get($url)->getBody();
+        // $this->info('Successfully truncated all logs and cache You can use clear Manually using this URL:' . $url);
     }
 }

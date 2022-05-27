@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSourceDomainsTable extends Migration
+class NovaPendingTrixAttachments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateSourceDomainsTable extends Migration
      */
     public function up()
     {
-        Schema::create('source_domains', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('domain')->index();
-            $table->string('status')->default('pending')->index();
+        Schema::create('nova_pending_trix_attachments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('draft_id')->index();
+            $table->string('attachment');
+            $table->string('disk');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateSourceDomainsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('source_domains');
+        Schema::dropIfExists('nova_pending_trix_attachments');
     }
 }

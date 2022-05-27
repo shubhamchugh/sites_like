@@ -5,13 +5,9 @@ namespace App\Nova;
 use Manogi\Tiptap\Tiptap;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Slug;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Post extends Resource
+class DnsDetail extends Resource
 {
 
     /**
@@ -26,7 +22,7 @@ class Post extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Post::class;
+    public static $model = \App\Models\DnsDetail::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -86,26 +82,62 @@ class Post extends Resource
             'editHtml',
         ];
         return [
-            ID::make()->asBigInt()->sortable(),
-            Text::make('Title', 'title')->nullable()->sortable(),
-            Text::make('Ip Address', 'ip')->nullable()->placeholder('127.0.0.1'),
-            Slug::make('Slug', 'slug')
-                ->from('title')
-                ->separator('-')
-                ->rules('required', 'alpha_dash', 'max:80')
-                ->creationRules('required', 'unique:posts,slug'),
-            Select::make('Post Type', 'post_type')->options([
-                'listing' => 'Listing',
-                'post'    => 'Post',
-            ])->displayUsingLabels()->rules('required')->sortable(),
-            Boolean::make('Status', 'status')->sortable(),
-            // Trix::make('content')->withFiles('public'),
-            Tiptap::make('content')
+            ID::make()->sortable(),
+            Tiptap::make('A')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-
+            Tiptap::make('AAAA')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('CNAME')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('NS')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('SOA')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('MX')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('SRV')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('TXT')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('DNSKEY')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('CAA')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Tiptap::make('NAPTR')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
         ];
     }
 

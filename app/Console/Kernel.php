@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Laravel\Nova\Trix\PruneStaleAttachments;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -19,6 +20,9 @@ class Kernel extends ConsoleKernel
             ->daily()
             ->appendOutputTo(storage_path('logs/cache-truncate.log'))
             ->runInBackground();
+
+        $schedule->call(new PruneStaleAttachments)->daily();
+
     }
 
     /**
