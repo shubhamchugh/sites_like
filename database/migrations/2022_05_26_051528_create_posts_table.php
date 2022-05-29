@@ -15,12 +15,16 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('dns_details_id')->nullable()->unsigned();
             $table->string('title')->index()->nullable();
             $table->string('slug')->unique();
             $table->string('ip')->index()->nullable();
             $table->boolean('status')->index()->default('1');
+            $table->boolean('is_index_google')->index()->default('0');
+            $table->boolean('is_index_bing')->index()->default('0');
             $table->string('post_type', 50)->default('listing');
+            $table->string('domain_title')->index()->nullable();
+            $table->string('domain_description')->index()->nullable();
+            $table->string('image')->index()->nullable();
             $table->text('content')->nullable();
             $table->softDeletes();
             $table->timestamps();

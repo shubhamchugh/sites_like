@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTechnologiesTable extends Migration
 {
@@ -16,15 +16,12 @@ class CreateTechnologiesTable extends Migration
         Schema::create('technologies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
-            $table->string('confidence');
-            $table->string('version');
-            $table->string('icon');
-            $table->string('website');
+            $table->string('slug')->unique();
+            $table->string('icon')->nullable();
+            $table->string('website')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('count')->unsigned()->default(0);
             $table->timestamps();
-
-            $table->unique(['slug', 'confidence', 'version']);
-
         });
     }
 

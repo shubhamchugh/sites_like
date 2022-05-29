@@ -7,9 +7,12 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use OsTheNeo\NovaFields\BelongsToManyField;
 
 class Post extends Resource
 {
@@ -33,7 +36,7 @@ class Post extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'slug';
 
     /**
      * The columns that should be searched.
@@ -41,7 +44,7 @@ class Post extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'slug',
     ];
 
     /**
@@ -92,20 +95,29 @@ class Post extends Resource
             Slug::make('Slug', 'slug')
                 ->from('title')
                 ->separator('-')
-                ->rules('required', 'alpha_dash', 'max:80')
+                ->rules('required', 'max:80')
                 ->creationRules('required', 'unique:posts,slug'),
             Select::make('Post Type', 'post_type')->options([
                 'listing' => 'Listing',
                 'post'    => 'Post',
             ])->displayUsingLabels()->rules('required')->sortable(),
             Boolean::make('Status', 'status')->sortable(),
-            // Trix::make('content')->withFiles('public'),
-            Tiptap::make('content')
+            Boolean::make('Indexing Google', 'is_index_google')->sortable(),
+            Boolean::make('Indexing Bing', 'is_index_bing')->sortable(),
+            Text::make('Domain Title', 'domain_title')->nullable()->hideFromIndex(),
+            Tiptap::make('Domain Description', 'domain_description')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-
+            Tiptap::make('Post Content', 'content')
+                ->buttons($options)
+                ->headingLevels([1, 2, 3, 4])
+                ->syntaxHighlighting()
+                ->nullable(),
+            Image::make('Screenshot', 'image')->disk('public'),
+            BelongsToManyField::make('Technologies', 'technologies', Technology::class)->hideFromIndex(),
+            HasOne::make('DNS Details', 'DnsDetails_relation', DnsDetail::class)->hideFromIndex(),
         ];
     }
 

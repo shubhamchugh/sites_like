@@ -2,9 +2,11 @@
 
 namespace App\Nova;
 
+use App\Nova\Post;
 use Manogi\Tiptap\Tiptap;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class DnsDetail extends Resource
@@ -82,63 +84,66 @@ class DnsDetail extends Resource
             'editHtml',
         ];
         return [
+
             ID::make()->sortable(),
-            Tiptap::make('A')
+            Tiptap::make('A', 'A')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('AAAA')
+            Tiptap::make('AAAA', 'AAAA')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('CNAME')
+            Tiptap::make('CNAME', 'CNAME')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('NS')
+            Tiptap::make('NS', 'NS')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('SOA')
+            Tiptap::make('SOA', 'SOA')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('MX')
+            Tiptap::make('MX', 'MX')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('SRV')
+            Tiptap::make('SRV', 'SRV')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('TXT')
+            Tiptap::make('TXT', 'TXT')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('DNSKEY')
+            Tiptap::make('DNSKEY', 'DNSKEY')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('CAA')
+            Tiptap::make('CAA', 'CAA')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('NAPTR')
+            Tiptap::make('NAPTR', 'NAPTR')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
+            BelongsTo::make('Post', 'posts_relation', Post::class)->searchable(),
         ];
+
     }
 
     /**

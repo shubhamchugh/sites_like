@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "artesaos/seotools": "^0.22.0",
         "fruitcake/laravel-cors": "^2.0",
+        "google/apiclient": "^2.12.1",
         "guzzlehttp/guzzle": "^7.0.1",
         "kirschbaum-development/nova-inline-select": "^2.0",
         "laravel/framework": "^8.75",
@@ -16,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "llaski/nova-scheduled-jobs": "^5.0",
         "manogi/nova-tiptap": "^3.0",
+        "ostheneo/nova-fields": "^1.1",
         "outl1ne/nova-menu-builder": "^7.0",
         "outl1ne/nova-settings": "^5.0",
         "pragmarx/version": "^1.3",
@@ -61,12 +63,16 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
     },
     "extra": {
         "laravel": {
             "dont-discover": []
-        }
+        },
+        "google/apiclient-services": [
+            "Indexing"
+        ]
     },
     "config": {
         "optimize-autoloader": true,

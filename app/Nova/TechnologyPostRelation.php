@@ -2,14 +2,13 @@
 
 namespace App\Nova;
 
-use Manogi\Tiptap\Tiptap;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Technology extends Resource
+class TechnologyPostRelation extends Resource
 {
 
     /**
@@ -24,14 +23,14 @@ class Technology extends Resource
      *
      * @var string
      */
-    public static $model = \App\Models\Technology::class;
+    public static $model = \App\Models\TechnologyPostRelation::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -39,7 +38,7 @@ class Technology extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'website',
+        'id',
     ];
 
     /**
@@ -50,54 +49,14 @@ class Technology extends Resource
      */
     public function fields(NovaRequest $request)
     {
-        $options = [
-            'heading',
-            '|',
-            'italic',
-            'bold',
-            '|',
-            'link',
-            'code',
-            'strike',
-            'underline',
-            'highlight',
-            '|',
-            'bulletList',
-            'orderedList',
-            'br',
-            'codeBlock',
-            'blockquote',
-            '|',
-            'horizontalRule',
-            'hardBreak',
-            '|',
-            'table',
-            '|',
-            'image',
-            '|',
-            'textAlign',
-            '|',
-            'rtl',
-            '|',
-            'history',
-            '|',
-            'editHtml',
-        ];
         return [
             ID::make()->sortable(),
-            Text::make('Name', 'name')->sortable(),
-            Slug::make('Slug', 'slug')
-                ->from('name')
-                ->separator('-')
-                ->rules('required', 'alpha_dash', 'max:80')
-                ->creationRules('required', 'unique:technologies,slug'),
-            Text::make('Icon', 'icon'),
-            Text::make('Website', 'website'),
-            Tiptap::make('Description', 'description')
-                ->buttons($options)
-                ->headingLevels([1, 2, 3, 4])
-                ->syntaxHighlighting()
-                ->nullable(),
+            // BelongsTo
+            Text::make('Confidence', 'confidence'),
+            Text::make('Version', 'version'),
+
+            BelongsTo::make('Post Id', 'posts_relation', 'App\Nova\Post')->searchable()->hideFromIndex(),
+            BelongsTo::make('Technology', 'technologies_relation', 'App\Nova\Technology')->searchable()->hideFromIndex(),
         ];
     }
 

@@ -15,6 +15,7 @@ class CreateDnsDetailsTable extends Migration
     {
         Schema::create('dns_details', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('post_id')->nullable()->unsigned();
             $table->string('A')->nullable();
             $table->string('AAAA')->nullable();
             $table->string('CNAME')->nullable();
