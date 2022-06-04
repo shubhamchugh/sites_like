@@ -2,10 +2,10 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use KirschbaumDevelopment\Nova\InlineSelect;
 use Laravel\Nova\Fields\ID;
+use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class SourceDomain extends Resource
@@ -41,16 +41,15 @@ class SourceDomain extends Resource
      */
     public function fields(NovaRequest $request)
     {
-        $options = ['pending', 'success'];
+        $options = [
+            'success'  => 'success',
+            'pending'  => 'pending',
+            'scraping' => 'scraping',
+        ];
         return [
             ID::make()->sortable(),
             Text::make('domain')->sortable(),
-            InlineSelect::make('status')
-                ->options($options)
-                ->inlineOnIndex()
-                ->inlineOnDetail()
-                ->rules('required')
-                ->sortable(),
+            Select::make('status')->options($options)->displayUsingLabels()->rules('required'),
         ];
     }
 

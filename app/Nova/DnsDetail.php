@@ -126,21 +126,12 @@ class DnsDetail extends Resource
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('DNSKEY', 'DNSKEY')
-                ->buttons($options)
-                ->headingLevels([1, 2, 3, 4])
-                ->syntaxHighlighting()
-                ->nullable(),
             Tiptap::make('CAA', 'CAA')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
-            Tiptap::make('NAPTR', 'NAPTR')
-                ->buttons($options)
-                ->headingLevels([1, 2, 3, 4])
-                ->syntaxHighlighting()
-                ->nullable(),
+
             BelongsTo::make('Post', 'posts_relation', Post::class)->searchable(),
         ];
 

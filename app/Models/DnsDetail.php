@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -17,9 +18,7 @@ class DnsDetail extends Model
         'MX',
         'SRV',
         'TXT',
-        'DNSKEY',
         'CAA',
-        'NAPTR',
         'post_id',
     ];
 

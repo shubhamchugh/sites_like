@@ -2,11 +2,14 @@
 
 namespace App\Nova;
 
+use App\Nova\Post;
+use App\Nova\Technology;
 use Manogi\Tiptap\Tiptap;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Technology extends Resource
@@ -89,7 +92,7 @@ class Technology extends Resource
             Slug::make('Slug', 'slug')
                 ->from('name')
                 ->separator('-')
-                ->rules('required', 'alpha_dash', 'max:80')
+                ->rules('required', 'max:191')
                 ->creationRules('required', 'unique:technologies,slug'),
             Text::make('Icon', 'icon'),
             Text::make('Website', 'website'),
@@ -98,6 +101,7 @@ class Technology extends Resource
                 ->headingLevels([1, 2, 3, 4])
                 ->syntaxHighlighting()
                 ->nullable(),
+            HasMany::make('Post', 'posts', Post::class),
         ];
     }
 

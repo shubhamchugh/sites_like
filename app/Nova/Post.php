@@ -2,8 +2,10 @@
 
 namespace App\Nova;
 
+use App\Nova\SeoAnalyzer;
 use Manogi\Tiptap\Tiptap;
 use Laravel\Nova\Fields\ID;
+use App\Nova\SslCertificate;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
@@ -11,6 +13,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use OsTheNeo\NovaFields\BelongsToManyField;
 
@@ -90,6 +93,7 @@ class Post extends Resource
         ];
         return [
             ID::make()->asBigInt()->sortable(),
+
             Text::make('Title', 'title')->nullable()->sortable(),
             Text::make('Ip Address', 'ip')->nullable()->placeholder('127.0.0.1'),
             Slug::make('Slug', 'slug')
@@ -104,12 +108,7 @@ class Post extends Resource
             Boolean::make('Status', 'status')->sortable(),
             Boolean::make('Indexing Google', 'is_index_google')->sortable(),
             Boolean::make('Indexing Bing', 'is_index_bing')->sortable(),
-            Text::make('Domain Title', 'domain_title')->nullable()->hideFromIndex(),
-            Tiptap::make('Domain Description', 'domain_description')
-                ->buttons($options)
-                ->headingLevels([1, 2, 3, 4])
-                ->syntaxHighlighting()
-                ->nullable(),
+
             Tiptap::make('Post Content', 'content')
                 ->buttons($options)
                 ->headingLevels([1, 2, 3, 4])
@@ -117,7 +116,15 @@ class Post extends Resource
                 ->nullable(),
             Image::make('Screenshot', 'image')->disk('public'),
             BelongsToManyField::make('Technologies', 'technologies', Technology::class)->hideFromIndex(),
+            BelongsToManyField::make('Alternatives', 'domain_alternative', '\App\Nova\Post')->onlyOnForms(),
+            HasMany::make('Alternative', 'domain_alternative', \App\Nova\Post::class)->hideFromIndex(),
             HasOne::make('DNS Details', 'DnsDetails_relation', DnsDetail::class)->hideFromIndex(),
+            HasOne::make('Ssl Certificate Details', 'Ssl_Details_relation', SslCertificate::class)->hideFromIndex(),
+            HasOne::make('Ip Record', 'ip_record_relation', IpRecord::class)->hideFromIndex(),
+            HasOne::make('Whois ', 'who_is_relation', WhoIsRecord::class)->hideFromIndex(),
+            HasOne::make('Attributes ', 'attributes_relation', Attribute::class)->hideFromIndex(),
+            HasOne::make('Seo Analyzer ', 'seo_analyzers_relation', SeoAnalyzer::class)->hideFromIndex(),
+
         ];
     }
 

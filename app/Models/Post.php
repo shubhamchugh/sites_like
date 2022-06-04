@@ -2,7 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\IpRecord;
+use App\Models\Attribute;
 use App\Models\DnsDetail;
+use App\Models\Technology;
+use App\Models\SeoAnalyzer;
+use App\Models\WhoIsRecord;
+use App\Models\SslCertificate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,17 +19,16 @@ class Post extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'dns_details_id',
         'title',
         'slug',
-        'domain_title',
-        'image',
-        'domain_description',
         'ip',
         'status',
-        'is_index',
         'post_type',
+        'up_down',
+        'image',
         'content',
+        'is_index_google',
+        'is_index_bing',
     ];
 
     public function technologies()
@@ -34,5 +39,35 @@ class Post extends Model
     public function DnsDetails_relation()
     {
         return $this->hasOne(DnsDetail::class, 'post_id', 'id');
+    }
+
+    public function Ssl_Details_relation()
+    {
+        return $this->hasOne(SslCertificate::class, 'post_id', 'id');
+    }
+
+    public function who_is_relation()
+    {
+        return $this->hasOne(WhoIsRecord::class, 'post_id', 'id');
+    }
+
+    public function ip_record_relation()
+    {
+        return $this->hasOne(IpRecord::class, 'post_id', 'id');
+    }
+
+    public function attributes_relation()
+    {
+        return $this->hasOne(Attribute::class, 'post_id', 'id');
+    }
+
+    public function seo_analyzers_relation()
+    {
+        return $this->hasOne(SeoAnalyzer::class, 'post_id', 'id');
+    }
+
+    public function domain_alternative()
+    {
+        return $this->belongsToMany(SELF::class, 'post_alternatives', 'post_id', 'post_alternate_id');
     }
 }

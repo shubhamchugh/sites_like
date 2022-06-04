@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Cache\AllClearController;
+use App\Http\Controllers\Scrape\FullScrapingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,8 @@ use App\Http\Controllers\Cache\AllClearController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('scrape', [FullScrapingController::class, 'scrape']);
 
 Route::get('clear', [AllClearController::class, 'clear']);
 

@@ -14,7 +14,7 @@ class AlterDnsDetailsTableForeignKey extends Migration
     public function up()
     {
         Schema::table('dns_details', function (Blueprint $table) {
-            $table->foreign('post_id')->references('id')->on('dns_details')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
