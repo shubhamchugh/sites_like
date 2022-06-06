@@ -12,9 +12,9 @@ use App\Models\WhoIsRecord;
 use App\Models\SourceDomain;
 use App\Models\SslCertificate;
 use App\Models\PostAlternative;
+use App\Helpers\Scrape\Get_Alter;
+use App\Helpers\Scrape\Get_Domain;
 use App\Http\Controllers\Controller;
-use App\Http\Helpers\Scrape\Get_Alter;
-use App\Http\Helpers\Scrape\Get_Domain;
 use Stevebauman\Location\Facades\Location;
 
 class FullScrapingController extends Controller
@@ -150,8 +150,9 @@ class FullScrapingController extends Controller
         }
 
         if (!empty($dns_records['ip'])) {
+
             Post::updateOrCreate(['id' => $primary_domain_id], [
-                'ip' => $dns_records['ip'],
+                'ip' => $dns_records['ip']['ip'],
             ]);
         }
 

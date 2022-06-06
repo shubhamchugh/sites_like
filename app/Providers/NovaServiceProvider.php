@@ -3,10 +3,8 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
-use Laravel\Nova\Panel;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Number;
 use Illuminate\Support\Facades\Gate;
+use App\Helpers\Settings\GeneralSettings;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use SimonHamp\LaravelNovaCsvImport\LaravelNovaCsvImport;
 
@@ -20,18 +18,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
-        // Using an array
-        \Outl1ne\NovaSettings\NovaSettings::addSettingsFields([
-            Panel::make('Panel old', [
-                Text::make('2 setting', 'some_setting'),
-                Number::make('A2 number', 'a_number'),
-            ]),
-        ]);
-
-        \Outl1ne\NovaSettings\NovaSettings::addSettingsFields([
-            Text::make('Some setting', 'some_setting'),
-            Number::make('A number', 'a_number'),
-        ], [], 'Subpage');
+        GeneralSettings::settings();
 
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Helpers\Scrape;
+namespace App\Helpers\Scrape;
 
 use Illuminate\Support\Facades\Http;
 

@@ -22,8 +22,8 @@ class CreateSslCertificatesTable extends Migration
             $table->json('getAdditionalDomains')->nullable();
             $table->string('getFingerprint')->nullable();
             $table->string('getFingerprintSha256')->nullable();
-            $table->dateTime('validFromDate')->nullable();
-            $table->dateTime('expirationDate')->nullable();
+            $table->dateTime('validFromDate')->index()->nullable();
+            $table->dateTime('expirationDate')->index()->nullable();
             $table->string('isValid')->nullable();
             $table->timestamps();
         });

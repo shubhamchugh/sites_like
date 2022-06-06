@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateTechnologiesTable extends Migration
 {
@@ -18,7 +18,7 @@ class CreateTechnologiesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('icon')->nullable();
-            $table->string('website')->nullable();
+            $table->string('website')->index()->nullable();
             $table->string('description')->nullable();
             $table->integer('count')->unsigned()->default(0);
             $table->timestamps();

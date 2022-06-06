@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Cache\AllClearController;
+use App\Http\Controllers\Frontend\HomePageController;
+use App\Http\Controllers\Frontend\PostPageController;
 use App\Http\Controllers\Scrape\FullScrapingController;
+use App\Http\Controllers\Settings\SettingsRecordsUpdateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +19,17 @@ use App\Http\Controllers\Scrape\FullScrapingController;
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('scrape', [FullScrapingController::class, 'scrape']);
 
 Route::get('clear', [AllClearController::class, 'clear']);
 
+Route::get('sql-update', SettingsRecordsUpdateController::class);
+
 Route::get('test', [TestController::class, 'test']);
+
+Route::get('/', [HomePageController::class, 'index']);
+
+Route::get('/{slug}', [PostPageController::class, 'index']);

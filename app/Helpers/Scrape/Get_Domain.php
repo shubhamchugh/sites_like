@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Helpers\Scrape;
+namespace App\Helpers\Scrape;
 
 use Pdp\Rules;
 use Pdp\Domain;

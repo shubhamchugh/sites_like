@@ -17,8 +17,8 @@ class CreateAttributesTable extends Migration
             $table->id();
             $table->bigInteger('post_id')->nullable()->unsigned();
             $table->string('alexa_rank')->nullable();
-            $table->string('alexa_country')->nullable();
-            $table->string('alexa_country_code')->nullable();
+            $table->string('alexa_country')->index()->nullable();
+            $table->string('alexa_country_code')->index()->nullable();
             $table->string('alexa_country_rank')->nullable();
             $table->string('sitejabber_ranking')->nullable();
             $table->string('trustpilot_ranking')->nullable();
