@@ -15,6 +15,7 @@ use App\Models\PostAlternative;
 use App\Helpers\Scrape\Get_Alter;
 use App\Helpers\Scrape\Get_Domain;
 use App\Http\Controllers\Controller;
+use App\Helpers\Scrape\Get_Screenshot;
 use Stevebauman\Location\Facades\Location;
 
 class FullScrapingController extends Controller
@@ -34,15 +35,22 @@ class FullScrapingController extends Controller
 
         $primary_domain = Get_Domain::get_registrableDomain($domain_source->domain);
 
-        $alter       = Get_Alter::site_like_scrape($primary_domain['url']);
-        $ssl         = sslCertificate($primary_domain['url']);
-        $alexa       = alexa_rank($primary_domain['url']);
-        $seoAnalyzer = seoAnalyzer($primary_domain['url']);
-        $whois       = whois($primary_domain['url']);
-        $post_exist  = Post::where('slug', $primary_domain['url'])->first();
-        $dns_records = dns_records($primary_domain['url']);
+        $alter = Get_Alter::site_like_scrape($primary_domain['url']);
 
+        $ssl = sslCertificate($primary_domain['url']);
+
+        $alexa = alexa_rank($primary_domain['url']);
+
+        $seoAnalyzer = seoAnalyzer($primary_domain['url']);
+
+        $whois = whois($primary_domain['url']);
+
+        $post_exist = Post::where('slug', $primary_domain['url'])->first();
+
+        $dns_records = dns_records($primary_domain['url']);
         $ip_location = Location::get($dns_records['ip']['ip']);
+
+        $screenshot = Get_Screenshot::screenshot_wasabi($primary_domain['url']);
 
         if (!empty($post_exist)) {
             $post_exist->update([
@@ -152,7 +160,9 @@ class FullScrapingController extends Controller
         if (!empty($dns_records['ip'])) {
 
             Post::updateOrCreate(['id' => $primary_domain_id], [
-                'ip' => $dns_records['ip']['ip'],
+                'ip'        => $dns_records['ip']['ip'],
+                'thumbnail' => $screenshot['thumbnail'],
+                'favicon'   => $screenshot['favicon'],
             ]);
         }
 

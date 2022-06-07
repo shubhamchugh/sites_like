@@ -60,7 +60,7 @@ return [
             'region'                  => env('WASABI_DEFAULT_REGION', 'eu-central-1'),
             'bucket'                  => env('WASABI_BUCKET'),
             // 'url'                     => env('AWS_URL'),
-            'endpoint'                => env('WASABI_ENDPOINT', 'https://s3.eu-central-1.wasabisys.com/'),
+            'endpoint'                => env('WASABI_ENDPOINT', 'https://s3.us-west-1.wasabisys.com/'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 

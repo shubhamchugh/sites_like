@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Stevebauman\Location\Facades\Location;
+use App\Helpers\Scrape\Get_Screenshot;
 
 class TestController extends Controller
 {
     public function test()
     {
+
+        $screenshot = Get_Screenshot::screenshot_wasabi("technofizi.net");
+
+        // $favicon = "https://www.google.com/s2/favicons?domain=technofizi.net";
+
+        // $favicon = file_get_contents($favicon);
+
+        // $faviconName   = Str::slug('technofizi.net', '-') . '.png';
+        // $faviconPath   = 'favicon/' . $faviconName;
+        // $faviconStatus = Storage::disk('wasabi')->put($faviconPath, $favicon);
+
         // dd(dns_records("mozilla.org"));
 
-        $position = Location::get('103.59.75.141');
-        dd($position);
+        // $position = Location::get('103.59.75.141');
+        // dd($position);
 
         // $dns     = new Dns();
         // $records = $dns->getRecords('technofizi.net');

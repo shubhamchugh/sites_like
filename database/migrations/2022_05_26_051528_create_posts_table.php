@@ -23,7 +23,8 @@ class CreatePostsTable extends Migration
             $table->string('language')->nullable();
             $table->string('load_time')->nullable();
             $table->string('up_down')->nullable();
-            $table->string('image')->index()->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->string('favicon')->nullable();
             $table->text('content')->nullable();
             $table->boolean('is_index_google')->index()->default('0');
             $table->boolean('is_index_bing')->index()->default('0');

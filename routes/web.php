@@ -30,6 +30,6 @@ Route::get('sql-update', SettingsRecordsUpdateController::class);
 
 Route::get('test', [TestController::class, 'test']);
 
-Route::get('/', [HomePageController::class, 'index']);
+Route::get('/', [HomePageController::class, 'index'])->name('home.index');
 
-Route::get('/{slug}', [PostPageController::class, 'index']);
+Route::get('/similar/{slug}', [PostPageController::class, 'index'])->name('post.show');

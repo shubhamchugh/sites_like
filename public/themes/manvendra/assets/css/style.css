@@ -118,6 +118,28 @@ button.but1 {
     border-radius: 6px;
 }
 
+.btn-meta{
+    padding: 4px 30px 10px 30px;
+    background-color: #a5a5a5;
+    border: none;
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.btn-product{
+    padding: 13px 60px 13px 60px;
+    /* background-color: var(--common_btn_color); */
+    border: none;
+    margin-top: 10px;
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    color: #FFF;
+    border-radius: 6px;
+}
+
 .dd img {
     text-align: center;
     float: none;

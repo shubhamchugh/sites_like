@@ -17,6 +17,7 @@
         "laravel/nova": "~4.0",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "llaski/nova-scheduled-jobs": "^5.0",
         "madeitbelgium/seo-analyzer": "^0.6",
         "manogi/nova-tiptap": "^3.0",
