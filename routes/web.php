@@ -32,4 +32,4 @@ Route::get('test', [TestController::class, 'test']);
 
 Route::get('/', [HomePageController::class, 'index'])->name('home.index');
 
-Route::get('/similar/{slug}', [PostPageController::class, 'index'])->name('post.show');
+Route::get('/similar/{post:slug}', [PostPageController::class, 'index'])->name('post.show');

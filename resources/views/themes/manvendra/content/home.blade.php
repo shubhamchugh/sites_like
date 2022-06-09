@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-12 col-md-3">
                         <div class="cc"><img class="img-fluid mt-2"
-                                src="https://s3.us-west-1.wasabisys.com/similer/scrape/thumbnail/{{ $post->thumbnail }}">
+                                src="https://s3.us-west-1.wasabisys.com/{{ config('filesystems.disks.wasabi.bucket') }}/scrape/thumbnail/{{ $post->thumbnail }}">
                         </div>
                     </div>
                     <div class="col-12 col-md-5">
@@ -39,9 +39,9 @@
                             {{ (($post->Ssl_Details_relation->isValid == 1) ? 'Valid SSL' : 'InValid SSL') ?? "" }}
                         </a>
 
-                        <a href="{{ route('post.show',['slug'=>$post->slug]) }}"
-                            class="btn btn-success btn-product">Site Like {{
-                            ucfirst($post->slug) }}</a>
+                        <a href="{{ route('post.show',['post'=>$post->slug]) }}" class="btn btn-product"><strong>SITE
+                                LIKE {{
+                                Str::upper($post->slug) }}</strong></a>
                     </div>
                 </div>
             </div>

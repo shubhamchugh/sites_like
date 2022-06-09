@@ -28,6 +28,7 @@ class Post extends Model
         'thumbnail',
         'favicon',
         'content',
+        'page_views',
         'is_index_google',
         'is_index_bing',
     ];

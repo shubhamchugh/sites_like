@@ -5,7 +5,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent ">
                 <div class="container">
                     <a class="navbar-brand" href="#">
-                        <img class="img-fluid" src="assets/images/logo.png">
+                        <img class="img-fluid" src="{{ asset('themes/manvendra/assets/images/logo.png') }}">
                     </a>
                     <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -29,34 +29,18 @@
                         </div>
 
 
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
-                            <li class="nav-item">
-                                <a class="nav-link active text-white" aria-current="page" href="index.html">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Advertise</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Contact us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">Privacy policy</a>
-                            </li>
-                        </ul>
+                        @include('themes.manvendra.panels.navbar')
 
                     </div>
                 </div>
             </nav>
             <div class="bog-hero">
                 <p>Top Similar Site like</p>
-                <h6>Xbox-Resolver.Com & Xbox- Resolver.Com</h6> <br>
+                <h6>{{ $post->slug }} </h6> <br>
                 <span>& Alternatives</span><br><br>
                 <span class="resolver">
                     <i class="fa fa-check blog-bgch" aria-hidden="true"></i> &nbsp;
-                    xbox-resolver.com</span>
+                    <a class="resolver" href="{{ $post->slug }}"> {{ $post->slug }}</a> </span>
             </div>
             <!-- <h1>Search Similar <span>Sites</span></h1> -->
         </div>

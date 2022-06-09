@@ -26,6 +26,7 @@ class CreatePostsTable extends Migration
             $table->string('thumbnail')->nullable();
             $table->string('favicon')->nullable();
             $table->text('content')->nullable();
+            $table->bigInteger('page_views')->nullable()->default('0');
             $table->boolean('is_index_google')->index()->default('0');
             $table->boolean('is_index_bing')->index()->default('0');
             $table->softDeletes();

@@ -44,6 +44,7 @@
     },
     "autoload": {
         "files": [
+            "app/Helpers/Query/Post.php",
             "app/Helpers/extension.php"
         ],
         "psr-4": {

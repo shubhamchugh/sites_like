@@ -130,7 +130,7 @@ button.but1 {
 
 .btn-product{
     padding: 13px 60px 13px 60px;
-    /* background-color: var(--common_btn_color); */
+    background-color: var(--common_btn_color);
     border: none;
     margin-top: 10px;
     display: block;
@@ -196,10 +196,11 @@ ul.jj li a {
     font-weight: bold;
     color: #000;
     font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
 }
 
 .like p {
-    font-weight: 600;
+    font-weight: 400;
     color: #000;
     font-size: 14px;
     line-height: 25px;
@@ -244,6 +245,7 @@ li.nav-item {
     font-weight: 100;
     font-size: 20px;
     margin-top: 30%;
+    text-decoration: none; 
 }
 
 .blog-bgch {
