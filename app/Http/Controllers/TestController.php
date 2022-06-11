@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Scrape\Get_Screenshot;
-
 class TestController extends Controller
 {
     public function test()
     {
+        // $domain = "http://technofizi.net";
+        // $ss     = "wappalyzer $domain";
 
-        $screenshot = Get_Screenshot::screenshot_wasabi("technofizi.net");
+        // print_r($wap);
+        // $screenshot = Get_Screenshot::screenshot_wasabi("technofizi.net");
 
         // $favicon = "https://www.google.com/s2/favicons?domain=technofizi.net";
 

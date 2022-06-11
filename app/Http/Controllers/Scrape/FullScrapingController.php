@@ -35,6 +35,9 @@ class FullScrapingController extends Controller
 
         $primary_domain = Get_Domain::get_registrableDomain($domain_source->domain);
 
+        $wappalyzer = shell_exec("wappalyzer $primary_domain[httpUrl]");
+        $wappalyzer = json_decode($wappalyzer, true);
+        dd($wappalyzer);
         $alter = Get_Alter::site_like_scrape($primary_domain['url']);
 
         $ssl = sslCertificate($primary_domain['url']);
@@ -45,9 +48,12 @@ class FullScrapingController extends Controller
 
         $whois = whois($primary_domain['url']);
 
+        $wappalyzer = shell_exec("wappalyzer $primary_domain[httpUrl]");
+
         $post_exist = Post::where('slug', $primary_domain['url'])->first();
 
         $dns_records = dns_records($primary_domain['url']);
+
         $ip_location = Location::get($dns_records['ip']['ip']);
 
         $screenshot = Get_Screenshot::screenshot_wasabi($primary_domain['url']);
@@ -171,6 +177,10 @@ class FullScrapingController extends Controller
                 'country_name' => $ip_location->countryName,
                 'country_code' => $ip_location->countryCode,
             ]);
+        }
+
+        if (!empty($wappalyzer)) {
+
         }
 
         $domain_source->update([

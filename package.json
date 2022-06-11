@@ -16,6 +16,6 @@
         "postcss": "^8.1.14"
     },
     "dependencies": {
-        "wappalyzer": "^6.10.26"
+        "wappalyzer": "^6.10.27"
     }
 }

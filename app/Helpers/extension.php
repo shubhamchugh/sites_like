@@ -56,7 +56,7 @@ if (!function_exists('seoAnalyzer')) {
             }
 
             if (empty($analyze['description'])) {
-                $analyze['description'] = Str::words($analyze['main_text'], 100);
+                $analyze['description'] = Str::words($analyze['main_text']['text'], 100);
             }
 
             return $analyze;

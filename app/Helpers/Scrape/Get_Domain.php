@@ -2,8 +2,8 @@
 
 namespace App\Helpers\Scrape;
 
-use Pdp\Rules;
 use Pdp\Domain;
+use Pdp\Rules;
 
 class Get_Domain
 {

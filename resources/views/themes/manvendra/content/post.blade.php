@@ -37,15 +37,19 @@
                                 <p class="heading-blog">Stats</p>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
                                             aria-hidden="true"></i></span>&nbsp; Alexa Rank:&nbsp;<span
-                                        class="span-alexa">449647</span> </p>
+                                        class="span-alexa"> {{ $post->attributes_relation->alexa_rank ?? "" }}</span>
+                                </p>
                                 <hr>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
                                             aria-hidden="true"></i></span>&nbsp; Popular in Country:&nbsp;<span
-                                        class="span-alexa"> N/A</span> </p>
+                                        class="span-alexa"> {{ $post->attributes_relation->alexa_country ?? "" }}</span>
+                                </p>
                                 <hr>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
                                             aria-hidden="true"></i></span>&nbsp; Country Alexa Rank: &nbsp;<span
-                                        class="span-alexa">N/A</span> </p>
+                                        class="span-alexa"> {{ $post->attributes_relation->alexa_country_rank ?? ""
+                                        }}</span>
+                                </p>
                                 <hr>
                             </div>
 
@@ -55,15 +59,18 @@
                                 <p class="heading-blog" style="visibility: hidden;">Stats</p>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
                                             aria-hidden="true"></i></span>&nbsp;language: &nbsp;<span
-                                        class="span-alexa">en</span> </p>
+                                        class="span-alexa">{{ $post->seo_analyzers_relation->language ?? "" }}</span>
+                                </p>
                                 <hr>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
                                             aria-hidden="true"></i></span>&nbsp; Response Time: &nbsp;<span
-                                        class="span-alexa">Response Time</span> </p>
+                                        class="span-alexa">{{ $post->seo_analyzers_relation->loadtime ?? "" }}</span>
+                                </p>
                                 <hr>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
-                                            aria-hidden="true"></i></span>&nbsp; SSL: &nbsp;<span
-                                        class="span-alexa">Enable</span> </p>
+                                            aria-hidden="true"></i></span>&nbsp; SSL: &nbsp;<span class="span-alexa">{{
+                                        ( $post->Ssl_Details_relation->isValid ==1) ? "Enable" : "Disable" ?? ""
+                                        }}</span> </p>
                                 <hr>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
                                             aria-hidden="true"></i></span>&nbsp; Status: &nbsp;<span
@@ -75,16 +82,17 @@
                             <div class="state-sec">
                                 <p class="heading-blog">Code To Txt Ratio</p>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
-                                            aria-hidden="true"></i></span>&nbsp;total_length &nbsp;<span
-                                        class="span-alexa">58863</span> </p>
+                                            aria-hidden="true"></i></span>&nbsp;Word Count &nbsp;<span
+                                        class="span-alexa">{{ $post->seo_analyzers_relation->word_count }}</span> </p>
                                 <hr>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
-                                            aria-hidden="true"></i></span>&nbsp; text_length &nbsp;<span
-                                        class="span-alexa">30490</span> </p>
+                                            aria-hidden="true"></i></span>&nbsp;Links &nbsp;<span class="span-alexa">{{
+                                        $post->seo_analyzers_relation->links['external'] }}</span>
+                                </p>
                                 <hr>
                                 <p class="p-alexa"><span><i class="fa fa-check blog-bgstate"
-                                            aria-hidden="true"></i></span>&nbsp; ratio &nbsp;<span
-                                        class="span-alexa">51.798243378693</span> </p>
+                                            aria-hidden="true"></i></span>&nbsp; ratio &nbsp;<span class="span-alexa">{{
+                                        $post->seo_analyzers_relation->codeToTxtRatio }}</span> </p>
                                 <hr>
                             </div>
                         </div>
@@ -98,14 +106,15 @@
                             <div class="state-sec-ssl">
                                 <p class="heading-blogblue">SSL Details</p>
                                 <p class="SSL-Details">SSL Issuer: </p>
-                                <p class="p-alexa"><b> Issuer:</b><span class="span-alexa"> Starfield Secure
-                                        Certificate Authority - G2 </span> </p>
+                                <p class="p-alexa"><b> Issuer:</b><span class="span-alexa"> &nbsp;{{
+                                        $post->Ssl_Details_relation->issuer ?? "" }}</span> </p>
                                 <hr>
-                                <p class="p-alexa"><b> Valid From:</b><span class="span-alexa"> 2021-01-05 07:34:23
+                                <p class="p-alexa"><b> Valid From:</b><span class="span-alexa">&nbsp; {{
+                                        $post->Ssl_Details_relation->validFromDate->diffforhumans() }}
                                     </span> </p>
                                 <hr>
-                                <p class="p-alexa"><b>Expiration Date:</b><span class="span-alexa"> 2022-02-04
-                                        07:34:23 </span> </p>
+                                <p class="p-alexa"><b>Expiration Date:</b><span class="span-alexa">&nbsp; &nbsp;{{
+                                        $post->Ssl_Details_relation->expirationDate->diffforhumans() }}</span> </p>
                                 <hr>
                             </div>
 
@@ -114,10 +123,11 @@
                             <div class="state-sec-ssl">
                                 <p class="heading-blogblue" style="visibility: hidden;">SSL Organization:</p>
                                 <p class="SSL-Details">SSL Organization: </p>
-                                <p class="p-alexa"><b> Signature </b><span class="span-alexa"> Starfield
-                                        Technologies, Inc </span> </p>
+                                <p class="p-alexa"><b> Signature </b><span class="span-alexa"> {{
+                                        $post->Ssl_Details_relation->getFingerprint }}</span> </p>
                                 <hr>
-                                <p class="p-alexa"><b> Algorithm: </b><span class="span-alexa"> RSA-SHA256 </span>
+                                <p class="p-alexa"><b> Algorithm: </b><span class="span-alexa"> {{
+                                        $post->Ssl_Details_relation->getSignatureAlgorithm }} </span>
                                 </p>
                                 <hr>
 

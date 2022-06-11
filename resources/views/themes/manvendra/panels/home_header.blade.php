@@ -6,6 +6,7 @@
                 <div class="container">
                     <a class="navbar-brand" href="#">
                         <img class="img-fluid" src="{{ asset('themes/manvendra/assets/images/logo.png') }}">
+
                     </a>
                     <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
