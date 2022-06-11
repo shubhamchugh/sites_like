@@ -4,7 +4,7 @@
 
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent ">
                 <div class="container">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="{{ route('home.index') }}">
                         <img class="img-fluid" src="{{ asset('themes/manvendra/assets/images/logo.png') }}">
                     </a>
                     <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
@@ -24,7 +24,6 @@
                                 </button>
                                 <input class="form-control me-2 custome-input" type="search" placeholder="Search"
                                     aria-label="Search">
-
                             </form>
                         </div>
 
@@ -34,17 +33,24 @@
                     </div>
                 </div>
             </nav>
+            @if ($post->post_type == 'listing')
             <div class="bog-hero">
-                <p>Top Similar Site like</p>
-                <h6>{{ $post->slug }} </h6> <br>
-                <span>& Alternatives</span><br><br>
+                <p>{{ nova_get_setting('title_above_content') }}</p>
+                <h1>{{ nova_get_setting('title_prefix') ?? "" }} {{ !empty($post->title) ? $post->title :
+                    Str::upper($post->slug) }} {{ nova_get_setting('title_suffix') ?? ""}} </h1> <br>
+                <span>{{ nova_get_setting('title_bellow_content') ?? "" }}</span><br><br>
                 <span class="resolver">
                     <i class="fa fa-check blog-bgch" aria-hidden="true"></i> &nbsp;
-                    <a class="resolver" href="{{ $post->slug }}"> {{ $post->slug }}</a> </span>
+                    <a class="resolver" href="http://{{ $post->slug }}" target="_blank"> {{ $post->slug }}</a> </span>
             </div>
-            <!-- <h1>Search Similar <span>Sites</span></h1> -->
+            @endif
+
+            @if ($post->post_type == 'page')
+            <div class="bog-hero">
+                <h1>{{ !empty($post->title) ? $post->title : Str::upper($post->slug) }} </h1>
+            </div>
+            @endif
         </div>
-    </div>
     </div>
     </div>
 

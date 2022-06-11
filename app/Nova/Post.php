@@ -103,9 +103,12 @@ class Post extends Resource
                 ->creationRules('required', 'unique:posts,slug'),
             Select::make('Post Type', 'post_type')->options([
                 'listing' => 'Listing',
-                'post'    => 'Post',
+                'page'    => 'Page',
             ])->displayUsingLabels()->rules('required')->sortable(),
-            Boolean::make('Status', 'status')->sortable(),
+            Select::make('Status', 'status')->options([
+                'publish'   => 'PUBLISH',
+                'unpublish' => 'UNPUBLISH',
+            ])->displayUsingLabels()->rules('required')->sortable(),
             Boolean::make('Indexing Google', 'is_index_google')->sortable(),
             Boolean::make('Indexing Bing', 'is_index_bing')->sortable(),
 

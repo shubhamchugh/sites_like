@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\IpRecord;
 use App\Models\Attribute;
 use App\Models\DnsDetail;
+use App\Models\Technology;
 use App\Models\SeoAnalyzer;
 use App\Models\WhoIsRecord;
 use App\Models\SourceDomain;
@@ -16,6 +17,7 @@ use App\Helpers\Scrape\Get_Alter;
 use App\Helpers\Scrape\Get_Domain;
 use App\Http\Controllers\Controller;
 use App\Helpers\Scrape\Get_Screenshot;
+use App\Models\TechnologyPostRelation;
 use Stevebauman\Location\Facades\Location;
 
 class FullScrapingController extends Controller
@@ -35,28 +37,7 @@ class FullScrapingController extends Controller
 
         $primary_domain = Get_Domain::get_registrableDomain($domain_source->domain);
 
-        $wappalyzer = shell_exec("wappalyzer $primary_domain[httpUrl]");
-        $wappalyzer = json_decode($wappalyzer, true);
-        dd($wappalyzer);
-        $alter = Get_Alter::site_like_scrape($primary_domain['url']);
-
-        $ssl = sslCertificate($primary_domain['url']);
-
-        $alexa = alexa_rank($primary_domain['url']);
-
-        $seoAnalyzer = seoAnalyzer($primary_domain['url']);
-
-        $whois = whois($primary_domain['url']);
-
-        $wappalyzer = shell_exec("wappalyzer $primary_domain[httpUrl]");
-
         $post_exist = Post::where('slug', $primary_domain['url'])->first();
-
-        $dns_records = dns_records($primary_domain['url']);
-
-        $ip_location = Location::get($dns_records['ip']['ip']);
-
-        $screenshot = Get_Screenshot::screenshot_wasabi($primary_domain['url']);
 
         if (!empty($post_exist)) {
             $post_exist->update([
@@ -70,6 +51,26 @@ class FullScrapingController extends Controller
             ]);
             $primary_domain_id = $primary_domain_result->id;
         }
+
+        $wappalyzer = shell_exec("wappalyzer $primary_domain[httpUrl]");
+
+        $wappalyzer = json_decode($wappalyzer, true);
+
+        $alter = Get_Alter::site_like_scrape($primary_domain['url']);
+
+        $ssl = sslCertificate($primary_domain['url']);
+
+        $alexa = alexa_rank($primary_domain['url']);
+
+        $seoAnalyzer = seoAnalyzer($primary_domain['url']);
+
+        $whois = whois($primary_domain['url']);
+
+        $dns_records = dns_records($primary_domain['url']);
+
+        $ip_location = Location::get($dns_records['ip']['ip']);
+
+        $screenshot = Get_Screenshot::screenshot_wasabi($primary_domain['url']);
 
         if ('OK' == $alter['status']) {
 
@@ -141,7 +142,7 @@ class FullScrapingController extends Controller
                 'nameServers'    => $whois_info['nameServers'],
                 'creationDate'   => $whois['creationDate'],
                 'expirationDate' => $whois['expirationDate'],
-                'updatedDate'    => date("Y-m-d", $whois_info['updatedDate']),
+                'updatedDate'    => (!empty($whois_info['updatedDate'])) ? date("Y-m-d", $whois_info['updatedDate']) : null,
                 'states'         => $whois_info['states'],
                 'owner'          => $whois['owner'],
                 'registrar'      => $whois_info['registrar'],
@@ -179,8 +180,24 @@ class FullScrapingController extends Controller
             ]);
         }
 
-        if (!empty($wappalyzer)) {
+        if (!empty($wappalyzer['technologies'])) {
 
+            foreach ($wappalyzer['technologies'] as $technology) {
+                $technology_database = Technology::updateOrCreate([
+                    'name'    => $technology['name'],
+                    'slug'    => $technology['slug'],
+                    'website' => $technology['website'],
+                    'icon'    => $technology['icon'],
+                ]);
+                $technology_database_id = $technology_database->id;
+
+                TechnologyPostRelation::updateOrCreate([
+                    'post_id'       => $primary_domain_id,
+                    'technology_id' => $technology_database_id,
+                    'confidence'    => $technology['confidence'],
+                    'version'       => $technology['version'],
+                ]);
+            }
         }
 
         $domain_source->update([

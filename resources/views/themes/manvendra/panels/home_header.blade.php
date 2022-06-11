@@ -4,7 +4,7 @@
 
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent ">
                 <div class="container">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="{{ route('home.index') }}">
                         <img class="img-fluid" src="{{ asset('themes/manvendra/assets/images/logo.png') }}">
 
                     </a>
@@ -25,7 +25,6 @@
                                 </button>
                                 <input class="form-control me-2 custome-input" type="search" placeholder="Search"
                                     aria-label="Search">
-
                             </form>
                         </div>
 

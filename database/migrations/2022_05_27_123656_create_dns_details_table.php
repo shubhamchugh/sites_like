@@ -16,17 +16,17 @@ class CreateDnsDetailsTable extends Migration
         Schema::create('dns_details', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('post_id')->nullable()->unsigned();
-            $table->string('A')->nullable();
-            $table->string('AAAA')->nullable();
-            $table->string('CNAME')->nullable();
-            $table->string('NS')->nullable();
-            $table->string('SOA')->nullable();
-            $table->string('MX')->nullable();
-            $table->string('SRV')->nullable();
-            $table->string('TXT')->nullable();
-            $table->string('DNSKEY')->nullable();
-            $table->string('CAA')->nullable();
-            $table->string('NAPTR')->nullable();
+            $table->text('A')->nullable();
+            $table->text('AAAA')->nullable();
+            $table->text('CNAME')->nullable();
+            $table->text('NS')->nullable();
+            $table->text('SOA')->nullable();
+            $table->text('MX')->nullable();
+            $table->text('SRV')->nullable();
+            $table->text('TXT')->nullable();
+            $table->text('DNSKEY')->nullable();
+            $table->text('CAA')->nullable();
+            $table->text('NAPTR')->nullable();
             $table->timestamps();
         });
     }

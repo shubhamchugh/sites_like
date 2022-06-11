@@ -25,8 +25,8 @@ class CreateSeoAnalyzersTable extends Migration
             $table->json('headers')->nullable();
             $table->json('links')->nullable();
             $table->json('images')->nullable();
-            $table->string('domain_title')->index()->nullable();
-            $table->string('domain_description')->index()->nullable();
+            $table->text('domain_title')->nullable();
+            $table->text('domain_description')->nullable();
             $table->timestamps();
         });
     }

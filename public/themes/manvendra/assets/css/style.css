@@ -225,12 +225,17 @@ li.nav-item {
     font-weight: 500;
     color: #F4BF41;
     font-family: 'Montserrat', sans-serif;
+    margin-bottom: auto !important;
 }
 
-.bog-hero h6 {
+.bog-hero h1 {
     color: #fff;
     font-weight: 700;
     font-size: 40px;
+    text-align:left !important;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    padding-top: 0;
 }
 
 .bog-hero span {
@@ -328,7 +333,7 @@ p.heading-blogblue {
     color: #fff;
 }
 
-.middle-sec h4 {
+.middle-sec h2 {
     font-weight: 700;
     font-size: 40px;
 }
@@ -339,9 +344,12 @@ p.heading-blogblue {
     padding: 12px 21px 18px 14px;
     background-color: var(--common_bg);
     color: #fff;
-    border-radius: 50px;
+    border-radius: 10px;
     display: inline;
     position: relative;
+    font-weight: 700;
+    font-size: 18px;
+
 }
 
 
@@ -427,3 +435,25 @@ pre.cust-pre {
     font-size: 16px !important;
     font-family: 'Montserrat', sans-serif;
 }
+
+.link-post{
+    flex-shrink: 28px;
+    font-weight: bold;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+   
+ }
+ .active>.page-link, .page-link.active{
+    background-color:var(--common_bg);
+    border-color: var(--common_bg);
+ }
+ .page-link{
+    color: var(--common_bg);
+ }

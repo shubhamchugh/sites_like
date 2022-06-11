@@ -4,45 +4,50 @@
             <div class="row">
                 <div class="col-12 col-md-3">
                     <p class="heading-footer">Quick Links</p>
-                    <ul class="ff">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Terms and conditions</a></li>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="col-12 col-md-3">
-                    <p class="heading-footer">Top Sites</p>
-                    <ul class="ff">
-                        <li><a href="#">el34worid.com</a></li>
-                        <li><a href="#">nesine.com</a></li>
-                        <li><a href="#">vietart.free.fr</a></li>
-                        <li><a href="#">eprothomalo.com</a></li>
-                        <li><a href="#">elbashayer.com</a></li>
-                        <li><a href="#">unblockit.lat</a></li>
-                    </ul>
-                </div>
-                <div class="col-12 col-md-3">
-                    <p class="heading-footer">Popular Sites</p>
-                    <ul class="ff">
-                        <li><a href="#">engdis.com</a></li>
-                        <li><a href="#">risanger.no</a></li>
-                        <li><a href="#">comandotorrent.com</a></li>
-                        <li><a href="#">japanread.cc</a></li>
-                        <li><a href="#">crackit.info</a></li>
-                        <li><a href="#">clickworker.com</a></li>
 
+                    <ul class="ff ">
+                        @foreach ($menus as $item)
+                        @if ($item['name'] == "Home")
+                        <li>
+                            <a href="{{ route('home.index') }}">{{ $item['name']
+                                }}</a>
+                        </li>
+                        @else
+                        <li>
+                            <a href="{{ route('page.show',['post'=>$item['value']]) }}">{{
+                                $item['name']
+                                }}</a>
+                        </li>
+                        @endif
+                        @endforeach
+                    </ul>
+
+                </div>
+                <div class="col-12 col-md-3">
+                    <p class="heading-footer">Recent Updated</p>
+                    <ul class="ff">
+                        @foreach ($recent_update as $recent_update_item)
+                        <li><a href="{{ route('post.show',['post'=>$recent_update_item['slug']]) }}">{{
+                                $recent_update_item['slug'] }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="col-12 col-md-3">
-                    <p class="heading-footer">Recently Visited</p>
+                    <p class="heading-footer">Top Visited</p>
                     <ul class="ff">
-                        <li><a href="#">kicklinefilms.com</a></li>
-                        <li><a href="#">answerthepublic.com</a></li>
-                        <li><a href="#">punjabititutor.com</a></li>
-                        <li><a href="#">musicpromotioncorp.com</a></li>
-                        <li><a href="#">liveimpex.in</a></li>
-                        <li><a href="#">sportbox.ru</a></li>
+                        @foreach ($top_visited as $top_visited_item)
+                        <li><a href="{{ route('post.show',['post'=>$top_visited_item['slug']]) }}">{{
+                                $top_visited_item['slug'] }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="col-12 col-md-3">
+                    <p class="heading-footer">Recent Added</p>
+                    <ul class="ff">
+                        @foreach ($recent_added as $recent_added_item)
+                        <li><a href="{{ route('post.show',['post'=>$recent_added_item['slug']]) }}">{{
+                                $recent_added_item['slug'] }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -53,33 +58,28 @@
             <div class="main-header">
                 <nav class="navbar navbar-expand-lg navbar-light bg-transparent ">
                     <div class="container">
-                        <a class="navbar-brand" href="#">
-                            <img class="img-fluid" src="assets/images/logo.png">
+                        <a class="navbar-brand" href="{{ route('home.index') }}">
+                            <img class="img-fluid" src="{{ asset('themes/manvendra/assets/images/logo.png') }}">
                         </a>
-                        <!-- <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon text-white"></span>
-                    </button> -->
+
                         <div class=" navbar-collapse">
                             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
+                                @foreach ($menus as $item)
+                                @if ($item['name'] == "Home")
                                 <li class="nav-item">
-                                    <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
+                                    <a class="nav-link text-white" href="{{ route('home.index') }}">{{ $item['name']
+                                        }}</a>
                                 </li>
+                                @else
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="#">About</a>
+                                    <a class="nav-link text-white"
+                                        href="{{ route('page.show',['post'=>$item['value']]) }}">{{ $item['name']
+                                        }}</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" href="#">Advertise</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" href="#">Contact us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" href="#">Privacy policy</a>
-                                </li>
+                                @endif
+                                @endforeach
                             </ul>
-
+                            <a class="nav-link text-white">{{ Version::version() }}</a>
                         </div>
                     </div>
                 </nav>

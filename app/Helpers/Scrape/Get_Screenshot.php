@@ -25,7 +25,7 @@ class Get_Screenshot
         if (!empty($screenshot)) {
 
             $thumbnail_name = $domain . '.png';
-            $thumbnailPath  = '/thumbnail/' . $thumbnail_name;
+            $thumbnailPath  = '/scrape/thumbnail/' . $thumbnail_name;
             Storage::disk('wasabi')->put($thumbnailPath, $screenshot);
         } else {
             $thumbnail_name = 'noimage.png';
@@ -33,10 +33,15 @@ class Get_Screenshot
 
         $favicon = "https://www.google.com/s2/favicons?domain=" . $domain;
 
-        $favicon       = file_get_contents($favicon);
-        $faviconName   = $domain . '.png';
-        $faviconPath   = 'favicon/' . $faviconName;
-        $faviconStatus = Storage::disk('wasabi')->put($faviconPath, $favicon);
+        try {
+            $favicon       = file_get_contents($favicon);
+            $faviconName   = $domain . '.png';
+            $faviconPath   = 'favicon/' . $faviconName;
+            $faviconStatus = Storage::disk('wasabi')->put($faviconPath, $favicon);
+
+        } catch (\Throwable$th) {
+            $faviconName = 'noimage.png';
+        }
 
         $result['thumbnail'] = $thumbnail_name;
         $result['favicon']   = $faviconName;

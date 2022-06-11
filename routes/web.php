@@ -6,6 +6,7 @@ use App\Http\Controllers\Cache\AllClearController;
 use App\Http\Controllers\Frontend\HomePageController;
 use App\Http\Controllers\Frontend\PostPageController;
 use App\Http\Controllers\Scrape\FullScrapingController;
+use App\Http\Controllers\Frontend\ContentPageController;
 use App\Http\Controllers\Settings\SettingsRecordsUpdateController;
 
 /*
@@ -32,4 +33,6 @@ Route::get('test', [TestController::class, 'test']);
 
 Route::get('/', [HomePageController::class, 'index'])->name('home.index');
 
-Route::get('/similar/{post:slug}', [PostPageController::class, 'index'])->name('post.show');
+Route::get('/page/{post:slug}', [ContentPageController::class, 'index'])->name('page.show');
+
+Route::get(nova_get_setting('permalink_prefix') . '/{post:slug}', [PostPageController::class, 'index'])->name('post.show');

@@ -46,21 +46,29 @@ if (!function_exists('sslCertificate')) {
 if (!function_exists('seoAnalyzer')) {
     function seoAnalyzer($domain)
     {
-        $analyze = SEO::analyze($domain);
+        try {
+            $analyze = SEO::analyze($domain);
+            if (!empty($analyze)) {
 
-        if (!empty($analyze)) {
+                if (empty($analyze['description'])) {
+                    try {
+                        $tags = get_meta_tags('http://' . $domain);
+                    } catch (\Throwable$th) {
+                        $tags['twitter:description'] = null;
+                    }
+                    $analyze['description'] = (!empty($tags['twitter:description'])) ? $tags['twitter:description'] : null;
+                }
 
-            if (empty($analyze['description'])) {
-                $tags                   = get_meta_tags('http://' . $domain);
-                $analyze['description'] = (!empty($tags['twitter:description'])) ? $tags['twitter:description'] : null;
+                if (empty($analyze['description'])) {
+                    $analyze['description'] = Str::words($analyze['main_text']['text'], 50);
+                }
+
+                return $analyze;
             }
-
-            if (empty($analyze['description'])) {
-                $analyze['description'] = Str::words($analyze['main_text']['text'], 100);
-            }
-
-            return $analyze;
+        } catch (\Throwable$th) {
+            return null;
         }
+
         return null;
     }
 }
@@ -83,14 +91,13 @@ if (!function_exists('alexa_rank')) {
 if (!function_exists('whois')) {
     function whois($domain)
     {
-        $whois    = Factory::get()->createWhois();
-        $response = $whois->lookupDomain($domain);
-        $info     = $whois->loadDomainInfo($domain);
-
+        $whois                    = Factory::get()->createWhois();
+        $response                 = $whois->lookupDomain($domain);
+        $info                     = $whois->loadDomainInfo($domain);
         $result['text']           = $response->text;
-        $result['creationDate']   = date("Y-m-d", $info->creationDate);
-        $result['expirationDate'] = date("Y-m-d", $info->expirationDate);
-        $result['owner']          = $info->owner;
+        $result['creationDate']   = (!empty($info->creationDate)) ? date("Y-m-d", $info->creationDate) : null;
+        $result['expirationDate'] = (!empty($info->expirationDate)) ? date("Y-m-d", $info->expirationDate) : null;
+        $result['owner']          = (!empty($info->owner)) ? $info->owner : "";
         $result['info']           = $info;
         return $result;
     }
@@ -109,16 +116,70 @@ if (!function_exists('dns_records')) {
         $result_final['TXT']   = null;
         $result_final['CAA']   = null;
 
-        $dns             = new Dns();
-        $result['A']     = (!empty($dns->getRecords($domain, 'A'))) ? $dns->getRecords($domain, 'A') : null;
-        $result['AAAA']  = (!empty($dns->getRecords($domain, 'AAAA'))) ? $dns->getRecords($domain, 'AAAA') : null;
-        $result['CNAME'] = (!empty($dns->getRecords($domain, 'CNAME'))) ? $dns->getRecords($domain, 'CNAME') : null;
-        $result['NS']    = (!empty($dns->getRecords($domain, 'NS'))) ? $dns->getRecords($domain, 'NS') : null;
-        $result['SOA']   = (!empty($dns->getRecords($domain, 'SOA'))) ? $dns->getRecords($domain, 'SOA') : null;
-        $result['MX']    = (!empty($dns->getRecords($domain, 'MX'))) ? $dns->getRecords($domain, 'MX') : null;
-        $result['SRV']   = (!empty($dns->getRecords($domain, 'SRV'))) ? $dns->getRecords($domain, 'SRV') : null;
-        $result['TXT']   = (!empty($dns->getRecords($domain, 'TXT'))) ? $dns->getRecords($domain, 'TXT') : null;
-        $result['CAA']   = (!empty($dns->getRecords($domain, 'CAA'))) ? $dns->getRecords($domain, 'CAA') : null;
+        $dns = new Dns();
+
+        try {
+            $dns->getRecords($domain, 'A');
+            $result['A'] = $dns->getRecords($domain, 'A');
+        } catch (\Throwable$th) {
+            $result['A'] = null;
+        }
+
+        try {
+            $dns->getRecords($domain, 'AAAA');
+            $result['AAAA'] = $dns->getRecords($domain, 'AAAA');
+        } catch (\Throwable$th) {
+            $result['AAAA'] = null;
+        }
+
+        try {
+            $dns->getRecords($domain, 'CNAME');
+            $result['CNAME'] = $dns->getRecords($domain, 'CNAME');
+        } catch (\Throwable$th) {
+            $result['CNAME'] = null;
+        }
+
+        try {
+            $dns->getRecords($domain, 'NS');
+            $result['NS'] = $dns->getRecords($domain, 'NS');
+        } catch (\Throwable$th) {
+            $result['NS'] = null;
+        }
+
+        try {
+            $dns->getRecords($domain, 'SOA');
+            $result['SOA'] = $dns->getRecords($domain, 'SOA');
+        } catch (\Throwable$th) {
+            $result['SOA'] = null;
+        }
+
+        try {
+            $dns->getRecords($domain, 'MX');
+            $result['MX'] = $dns->getRecords($domain, 'MX');
+        } catch (\Throwable$th) {
+            $result['MX'] = null;
+        }
+
+        try {
+            $dns->getRecords($domain, 'SRV');
+            $result['SRV'] = $dns->getRecords($domain, 'SRV');
+        } catch (\Throwable$th) {
+            $result['SRV'] = null;
+        }
+
+        try {
+            $dns->getRecords($domain, 'TXT');
+            $result['TXT'] = $dns->getRecords($domain, 'TXT');
+        } catch (\Throwable$th) {
+            $result['TXT'] = null;
+        }
+
+        try {
+            $dns->getRecords($domain, 'CAA');
+            $result['CAA'] = $dns->getRecords($domain, 'CAA');
+        } catch (\Throwable$th) {
+            $result['CAA'] = null;
+        }
 
         if (!empty($result['A'])) {
             foreach ($result['A'] as $value) {

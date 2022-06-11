@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
-class PostPageController extends Controller
+class ContentPageController extends Controller
 {
     public function index(Post $post)
     {
-        if ('unpublish' == $post->status) {
+
+        if ('unpublish' == $post->status || 'listing' == $post->post_type) {
             return abort(404);
         }
 
@@ -36,13 +37,11 @@ class PostPageController extends Controller
             ->limit(6)
             ->get();
 
-        //  $post = $post->where('status', 'publish');
-
         $post->update([
             'page_views' => DB::raw('page_views + 1'),
         ]);
 
-        return view('themes.manvendra.content.post',
+        return view('themes.manvendra.content.page',
             [
                 'post'          => $post,
                 'menus'         => $menus,
