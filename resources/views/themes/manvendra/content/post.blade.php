@@ -237,6 +237,48 @@
             @endif
 
             @endforeach
+
+            <div class="beener">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="cc">
+                            <h2>Technologies Used by {{ $post->slug }}</h2>
+                            @foreach ($post->technologies as $tech_stack)
+                            {{ $tech_stack->name }}
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="beener">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="cc">
+                            <h2>Dns Records of {{ $post->slug }}</h2>
+                            A Record: {!! $post->DnsDetails_relation->A !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="beener">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="cc">
+                            <h2>Whois Detail of {{ $post->slug }}</h2>
+                            {!! $post->who_is_relation->text !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
         </div>
     </div>
 </section>

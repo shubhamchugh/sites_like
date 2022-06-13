@@ -24,13 +24,13 @@ class Get_Alter
 
         $response_xpath = new \DOMXPath($response);
 
-        $alternative_urls = $response_xpath->query('//*[@id="MainContent_pnlMain"]/div[5]/div[1]/div[*]/div/div[2]/a[1]');
+        $alternative_urls = $response_xpath->query('//*[@id="MainContent_pnlMain"]/div[5]/div[1]/div[*]/div/div[2]/a[2]/@href');
 
         if (!empty($alternative_urls->length)) {
+
             foreach ($alternative_urls as $alternative_url) {
                 $alternatives['alter'][] = $alternative_url->nodeValue;
             }
-
             $alternatives['status'] = "OK";
             return $alternatives;
         } else {

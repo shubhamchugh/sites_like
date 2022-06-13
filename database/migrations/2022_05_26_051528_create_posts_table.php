@@ -27,6 +27,14 @@ class CreatePostsTable extends Migration
             $table->bigInteger('page_views')->index()->default('0');
             $table->boolean('is_index_google')->index()->default('0');
             $table->boolean('is_index_bing')->index()->default('0');
+            $table->string('is_wappalyzer')->index()->default('pending');
+            $table->string('is_ssl')->index()->default('pending');
+            $table->string('is_alexa')->index()->default('pending');
+            $table->string('is_seo_analyzer')->index()->default('pending');
+            $table->string('is_whois')->index()->default('pending');
+            $table->string('is_dns')->index()->default('pending');
+            $table->string('is_ip_location')->index()->default('pending');
+            $table->string('is_screenshot')->index()->default('pending');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -31,6 +31,14 @@ class Post extends Model
         'page_views',
         'is_index_google',
         'is_index_bing',
+        'is_wappalyzer',
+        'is_ssl',
+        'is_alexa',
+        'is_seo_analyzer',
+        'is_whois',
+        'is_dns',
+        'is_ip_location',
+        'is_screenshot',
     ];
 
     public function technologies()
