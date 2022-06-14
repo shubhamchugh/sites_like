@@ -4,19 +4,25 @@ namespace App\Http\Controllers\Scrape;
 
 use App\Models\Post;
 use App\Models\Technology;
+use Illuminate\Http\Request;
 use App\Helpers\Scrape\Get_Domain;
 use App\Http\Controllers\Controller;
 use App\Models\TechnologyPostRelation;
 
 class WappalyzerScrapeController extends Controller
 {
-    public function wappalyzer_scrape()
+    public function wappalyzer_scrape(Request $request)
     {
+        $status = !empty($request->status) ? $request->status : "pending";
 
-        $domain = Post::where('is_wappalyzer', 'pending')
+        $domain = Post::where('is_wappalyzer', $status)
             ->where('post_type', 'listing')
             ->orderBy('status', 'ASC')
             ->first();
+
+        if (empty($domain)) {
+            return "No Record Found Please check Database";
+        }
 
         $domain->update([
             'is_wappalyzer' => 'scraping',

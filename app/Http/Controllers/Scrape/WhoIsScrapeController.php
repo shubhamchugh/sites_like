@@ -4,19 +4,25 @@ namespace App\Http\Controllers\Scrape;
 
 use App\Models\Post;
 use App\Models\WhoIsRecord;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class WhoIsScrapeController extends Controller
 {
-    public function who_is_scrape()
+    public function who_is_scrape(Request $request)
     {
-        $domain = Post::where('is_whois', 'pending')
+
+        $status = !empty($request->status) ? $request->status : "pending";
+
+        $domain = Post::where('is_whois', $status)
             ->where('post_type', 'listing')
             ->orderBy('status', 'ASC')
             ->first();
+
         if (empty($domain)) {
             return "No Record Found Please check Database";
         }
+
         $domain->update([
             'is_whois' => 'scraping',
         ]);

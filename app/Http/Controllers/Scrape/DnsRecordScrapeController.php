@@ -4,16 +4,23 @@ namespace App\Http\Controllers\Scrape;
 
 use App\Models\Post;
 use App\Models\DnsDetail;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class DnsRecordScrapeController extends Controller
 {
-    public function dns_record_scrape()
+    public function dns_record_scrape(Request $request)
     {
-        $domain = Post::where('is_dns', 'pending')
+        $status = !empty($request->status) ? $request->status : "pending";
+
+        $domain = Post::where('is_dns', $status)
             ->where('post_type', 'listing')
             ->orderBy('status', 'ASC')
             ->first();
+
+        if (empty($domain)) {
+            return "No Record Found Please check Database";
+        }
 
         $domain->update([
             'is_dns' => 'scraping',

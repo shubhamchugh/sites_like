@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Scrape;
 
 use App\Models\Post;
 use App\Models\SourceDomain;
+use Illuminate\Http\Request;
 use App\Models\PostAlternative;
 use App\Helpers\Scrape\Get_Alter;
 use App\Helpers\Scrape\Get_Domain;
@@ -11,9 +12,11 @@ use App\Http\Controllers\Controller;
 
 class AlterScrapeController extends Controller
 {
-    public function alter_scrape()
+    public function alter_scrape(Request $request)
     {
-        $domain_source = SourceDomain::where('status', 'pending')->first();
+        $status = !empty($request->status) ? $request->status : "pending";
+
+        $domain_source = SourceDomain::where('status', $status)->first();
 
         if (empty($domain_source)) {
             return "No record found in source domain table";
@@ -24,6 +27,13 @@ class AlterScrapeController extends Controller
         ]);
 
         $primary_domain = Get_Domain::get_registrableDomain($domain_source->domain);
+
+        if (empty($primary_domain['url'])) {
+            $domain_source->update([
+                'status' => 'InValid_Domain',
+            ]);
+            die;
+        }
 
         $post_exist = Post::where('slug', $primary_domain['url'])->first();
 

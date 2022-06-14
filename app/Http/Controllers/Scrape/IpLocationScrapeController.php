@@ -4,18 +4,25 @@ namespace App\Http\Controllers\Scrape;
 
 use App\Models\Post;
 use App\Models\IpRecord;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Stevebauman\Location\Facades\Location;
 
 class IpLocationScrapeController extends Controller
 {
-    public function ip_location_scrape()
+    public function ip_location_scrape(Request $request)
     {
 
-        $domain = Post::where('is_ip_location', 'pending')
+        $status = !empty($request->status) ? $request->status : "pending";
+
+        $domain = Post::where('is_ip_location', $status)
             ->where('post_type', 'listing')
             ->orderBy('status', 'ASC')
             ->first();
+
+        if (empty($domain)) {
+            return "No Record Found Please check Database";
+        }
 
         $domain->update([
             'is_ip_location' => 'scraping',

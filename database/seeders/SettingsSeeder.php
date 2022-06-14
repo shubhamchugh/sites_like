@@ -16,14 +16,12 @@ class SettingsSeeder extends Seeder
     {
         $records = Settings::where('key', 'permalink_prefix')->first();
 
-        if (!empty($records)) {
-            echo "Already have settings";
-            die;
+        if (empty($records)) {
+            Settings::firstOrCreate([
+                'key'   => 'permalink_prefix',
+                'value' => 'similar',
+            ]);
         }
 
-        Settings::firstOrCreate([
-            'key'   => 'permalink_prefix',
-            'value' => 'similar',
-        ]);
     }
 }

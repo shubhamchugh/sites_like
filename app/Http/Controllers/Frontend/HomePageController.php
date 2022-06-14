@@ -49,9 +49,11 @@ class HomePageController extends Controller
             ->get();
         $settings = nova_get_settings();
 
+        $home_title            = (!empty($settings['home_title'])) ? $settings['home_title'] : "Home Page";
+        $home_page_description = (!empty($settings['home_page_description'])) ? $settings['home_page_description'] : "";
         //SEO FOR HOME PAGE
-        SEOTools::setTitle($settings['home_title'] . ' | Page' . $posts->currentPage());
-        SEOTools::setDescription($settings['home_page_description']);
+        SEOTools::setTitle($home_title . ' | Page' . $posts->currentPage());
+        SEOTools::setDescription($home_page_description);
         SEOTools::opengraph()->setUrl(URL::current());
         SEOTools::setCanonical(URL::current());
         SEOTools::opengraph()->addProperty('type', 'article');

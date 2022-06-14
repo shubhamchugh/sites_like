@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Scrape;
 
 use App\Models\Post;
 use App\Models\SeoAnalyzer;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class SeoAnalyzerScrapeController extends Controller
 {
-    public function seo_analyzer_scrape()
+    public function seo_analyzer_scrape(Request $request)
     {
-        $domain = Post::where('is_seo_analyzer', 'pending')
+
+        $status = !empty($request->status) ? $request->status : "pending";
+
+        $domain = Post::where('is_seo_analyzer', $status)
             ->where('post_type', 'listing')
             ->orderBy('status', 'ASC')
             ->first();
+
+        if (empty($domain)) {
+            return "No Record Found Please check Database";
+        }
 
         $domain->update([
             'is_seo_analyzer' => 'scraping',

@@ -4,17 +4,24 @@ namespace App\Http\Controllers\Scrape;
 
 use App\Models\Post;
 use App\Models\Attribute;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AlexaRankScrapeController extends Controller
 {
-    public function alexa_rank_scrape()
+    public function alexa_rank_scrape(Request $request)
     {
 
-        $domain = Post::where('is_alexa', 'pending')
+        $status = !empty($request->status) ? $request->status : "pending";
+
+        $domain = Post::where('is_alexa', $status)
             ->where('post_type', 'listing')
             ->orderBy('status', 'ASC')
             ->first();
+
+        if (empty($domain)) {
+            return "No Record Found Please check Database";
+        }
 
         $domain->update([
             'is_alexa' => 'scraping',

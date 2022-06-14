@@ -3,17 +3,25 @@
 namespace App\Http\Controllers\Scrape;
 
 use App\Models\Post;
+use Illuminate\Http\Request;
 use App\Models\SslCertificate;
 use App\Http\Controllers\Controller;
 
 class SslCertificateScrapeController extends Controller
 {
-    public function ssl_certificate_scrape()
+    public function ssl_certificate_scrape(Request $request)
     {
-        $domain = Post::where('is_ssl', 'pending')
+
+        $status = !empty($request->status) ? $request->status : "pending";
+
+        $domain = Post::where('is_ssl', $status)
             ->where('post_type', 'listing')
             ->orderBy('status', 'ASC')
             ->first();
+
+        if (empty($domain)) {
+            return "No Record Found Please check Database";
+        }
 
         $domain->update([
             'is_ssl' => 'scraping',
