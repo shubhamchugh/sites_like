@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Cache\AllClearController;
 use App\Http\Controllers\Frontend\HomePageController;
@@ -54,4 +55,7 @@ Route::get('/', [HomePageController::class, 'index'])->name('home.index');
 
 Route::get('/page/{post:slug}', [ContentPageController::class, 'index'])->name('page.show');
 
-Route::get((!empty(nova_get_setting('permalink_prefix')) ? nova_get_setting('permalink_prefix') : "similar") . '/{post:slug}', [PostPageController::class, 'index'])->name('post.show');
+if (Schema::hasTable('nova_settings')) {
+
+    Route::get((!empty(nova_get_setting('permalink_prefix')) ? nova_get_setting('permalink_prefix') : "Similar") . '/{post:slug}', [PostPageController::class, 'index'])->name('post.show');
+}

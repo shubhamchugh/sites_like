@@ -2219,16 +2219,16 @@
         },
         {
             "name": "io-developer/php-whois",
-            "version": "4.1.6",
+            "version": "4.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/io-developer/php-whois.git",
-                "reference": "7798aec47cd7c3469eef621d2019905f6bdab208"
+                "reference": "6c6cd1d7392d76ba18752cf37227433b50b0bac9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/io-developer/php-whois/zipball/7798aec47cd7c3469eef621d2019905f6bdab208",
-                "reference": "7798aec47cd7c3469eef621d2019905f6bdab208",
+                "url": "https://api.github.com/repos/io-developer/php-whois/zipball/6c6cd1d7392d76ba18752cf37227433b50b0bac9",
+                "reference": "6c6cd1d7392d76ba18752cf37227433b50b0bac9",
                 "shasum": ""
             },
             "require": {
@@ -2275,9 +2275,9 @@
             ],
             "support": {
                 "issues": "https://github.com/io-developer/php-whois/issues",
-                "source": "https://github.com/io-developer/php-whois/tree/4.1.6"
+                "source": "https://github.com/io-developer/php-whois/tree/4.1.7"
             },
-            "time": "2022-01-24T15:56:05+00:00"
+            "time": "2022-06-14T10:29:24+00:00"
         },
         {
             "name": "ivopetkov/html5-dom-document-php",
