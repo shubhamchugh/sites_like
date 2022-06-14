@@ -54,4 +54,4 @@ Route::get('/', [HomePageController::class, 'index'])->name('home.index');
 
 Route::get('/page/{post:slug}', [ContentPageController::class, 'index'])->name('page.show');
 
-Route::get(nova_get_setting('permalink_prefix') . '/{post:slug}', [PostPageController::class, 'index'])->name('post.show');
+Route::get((!empty(nova_get_setting('permalink_prefix')) ? nova_get_setting('permalink_prefix') : "similar") . '/{post:slug}', [PostPageController::class, 'index'])->name('post.show');
