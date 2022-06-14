@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Settings;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class SettingsSeeder extends Seeder
 {
@@ -16,9 +14,14 @@ class SettingsSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        Settings::truncate();
-        DB::table('nova_settings')->insert([
+        $records = Settings::where('key', 'permalink_prefix')->first();
+
+        if (!empty($records)) {
+            echo "Already have settings";
+            die;
+        }
+
+        Settings::firstOrCreate([
             'key'   => 'permalink_prefix',
             'value' => 'similar',
         ]);
