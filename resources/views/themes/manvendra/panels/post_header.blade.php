@@ -35,10 +35,10 @@
             </nav>
             @if ($post->post_type == 'listing')
             <div class="bog-hero">
-                <p>{{ nova_get_setting('title_above_content') }}</p>
-                <h1>{{ nova_get_setting('title_prefix') ?? "" }} {{ !empty($post->title) ? $post->title :
-                    Str::upper($post->slug) }} {{ nova_get_setting('title_suffix') ?? ""}} </h1> <br>
-                <span>{{ nova_get_setting('title_bellow_content') ?? "" }}</span><br><br>
+                <p>{{ $settings['title_above_content'] }}</p>
+                <h1>{{ $settings['title_prefix'] ?? "" }} {{ !empty($post->title) ? $post->title :
+                    Str::upper($post->slug) }} {{ $settings['title_suffix'] ?? ""}} </h1> <br>
+                <span>{{ $settings['title_bellow_content'] ?? "" }}</span><br><br>
                 <span class="resolver">
                     <i class="fa fa-check blog-bgch" aria-hidden="true"></i> &nbsp;
                     <a class="resolver" rel="nofollow" href="http://{{ $post->slug }}" target="_blank"> {{ $post->slug

@@ -10,16 +10,17 @@ class SettingsRecordsUpdateController extends Controller
     public function __invoke()
     {
         $data = [
-            'site_name'            => 'Website Name',
-            'home_title'           => 'Home Title',
-            'google_forms_contact' => 'http://google.com/form',
-            'head_code'            => '',
-            'bellow_title_ads'     => '',
-            'title_above_content'  => '',
-            'title_bellow_content' => '',
-            'title_prefix'         => '',
-            'title_suffix'         => '',
-            'permalink_prefix'     => 'similar',
+            'site_name'             => 'Website Name',
+            'home_title'            => 'Home Title',
+            'home_page_description' => '',
+            'google_forms_contact'  => 'http://google.com/form',
+            'head_code'             => '',
+            'bellow_title_ads'      => '',
+            'title_above_content'   => '',
+            'title_bellow_content'  => '',
+            'title_prefix'          => '',
+            'title_suffix'          => '',
+            'permalink_prefix'      => 'similar',
 
         ];
 

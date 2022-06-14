@@ -18,6 +18,7 @@ class GeneralSettings
 
                 Text::make('Site Name', 'site_name'),
                 Text::make('Home Page Title', 'home_title'),
+                Text::make('Home Page Description', 'home_page_description'),
                 Text::make('Google Form Link', 'google_forms_contact'),
                 Text::make('Title Above Content', 'title_above_content'),
                 Text::make('Title Bellow Content', 'title_bellow_content'),

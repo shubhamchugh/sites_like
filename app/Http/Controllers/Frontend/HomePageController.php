@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use Artesaos\SEOTools\Facades\SEOTools;
 
 class HomePageController extends Controller
 {
     public function index()
     {
+
         $posts = Post::with(
             'seo_analyzers_relation',
             'ip_record_relation',
@@ -44,6 +47,14 @@ class HomePageController extends Controller
             ->where('status', 'publish')
             ->limit(6)
             ->get();
+        $settings = nova_get_settings();
+
+        //SEO FOR HOME PAGE
+        SEOTools::setTitle($settings['home_title'] . ' | Page' . $posts->currentPage());
+        SEOTools::setDescription($settings['home_page_description']);
+        SEOTools::opengraph()->setUrl(URL::current());
+        SEOTools::setCanonical(URL::current());
+        SEOTools::opengraph()->addProperty('type', 'article');
 
         return view('themes.manvendra.content.home', [
             'posts'         => $posts,
