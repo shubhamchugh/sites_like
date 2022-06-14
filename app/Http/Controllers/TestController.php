@@ -8,6 +8,7 @@ class TestController extends Controller
 {
     public function test(Request $requet)
     {
+
         // $domain = "http://technofizi.net";
         // $ss     = "wappalyzer $domain";
 

@@ -41,7 +41,8 @@
                 <span>{{ nova_get_setting('title_bellow_content') ?? "" }}</span><br><br>
                 <span class="resolver">
                     <i class="fa fa-check blog-bgch" aria-hidden="true"></i> &nbsp;
-                    <a class="resolver" href="http://{{ $post->slug }}" target="_blank"> {{ $post->slug }}</a> </span>
+                    <a class="resolver" rel="nofollow" href="http://{{ $post->slug }}" target="_blank"> {{ $post->slug
+                        }}</a> </span>
             </div>
             @endif
 

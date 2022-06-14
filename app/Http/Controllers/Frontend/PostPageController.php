@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class PostPageController extends Controller
 {

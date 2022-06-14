@@ -14,7 +14,9 @@ class WhoIsScrapeController extends Controller
             ->where('post_type', 'listing')
             ->orderBy('status', 'ASC')
             ->first();
-
+        if (empty($domain)) {
+            return "No Record Found Please check Database";
+        }
         $domain->update([
             'is_whois' => 'scraping',
         ]);

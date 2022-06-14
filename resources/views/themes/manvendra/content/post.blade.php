@@ -244,7 +244,7 @@
                         <div class="cc">
                             <h2>Technologies Used by {{ $post->slug }}</h2>
                             @foreach ($post->technologies as $tech_stack)
-                            {{ $tech_stack->name }}
+                            <li>{{ $tech_stack->name }}</li>
                             @endforeach
                         </div>
                     </div>
@@ -258,7 +258,16 @@
                     <div class="col-12 col-md-12">
                         <div class="cc">
                             <h2>Dns Records of {{ $post->slug }}</h2>
-                            A Record: {!! $post->DnsDetails_relation->A !!}
+                            A Record: {!! optional($post->DnsDetails_relation)->A ?? "" !!}<br>
+                            AAAA Record: {!! optional($post->DnsDetails_relation)->AAAA ?? "" !!}<br>
+                            CNAME Record: {!! optional($post->DnsDetails_relation)->CNAME ?? "" !!}<br>
+                            NS Record: {!! optional($post->DnsDetails_relation)->NS ?? "" !!}<br>
+                            SOA Record: {!! optional($post->DnsDetails_relation)->SOA ?? ""!!}<br>
+                            MX Record: {!! optional($post->DnsDetails_relation)->MX ?? "" !!}<br>
+                            SRV Record: {!! optional($post->DnsDetails_relation)->SRV ?? "" !!}<br>
+                            TXT Record: {!! optional($post->DnsDetails_relation)->TXT ?? "" !!}<br>
+                            DNSKEY Record: {!! optional($post->DnsDetails_relation)->DNSKEY ?? "" !!}<br>
+                            CAA Record: {!! optional($post->DnsDetails_relation)->CAA ?? "" !!}<br>
                         </div>
                     </div>
                 </div>
@@ -269,7 +278,7 @@
                     <div class="col-12 col-md-12">
                         <div class="cc">
                             <h2>Whois Detail of {{ $post->slug }}</h2>
-                            {!! $post->who_is_relation->text !!}
+                            {!! nl2br(optional($post->who_is_relation)->text) ?? "" !!}
                         </div>
                     </div>
                 </div>
