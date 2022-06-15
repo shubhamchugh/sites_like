@@ -36,27 +36,27 @@ class WappalyzerScrapeController extends Controller
 
         if (empty($wappalyzer['technologies']) && 'pending' !== $status) {
             $domain->update([
-                'is_seo_analyzer' => 'discard',
+                'is_wappalyzer' => 'discard',
             ]);
-            echo "Something bad with analyzing seo with $domain->slug";
+            echo "Something bad with analyzing wappalyzer of  $domain->slug";
             die;
         }
 
         if (empty($wappalyzer['technologies'])) {
             $domain->update([
-                'is_seo_analyzer' => 'fail',
+                'is_wappalyzer' => 'fail',
             ]);
-            echo "Something bad with analyzing seo with $domain->slug";
+            echo "Something bad with analyzing wappalyzer of  $domain->slug";
             die;
         }
 
         echo "<h1>Technology in DataBase</h1>";
         foreach ($wappalyzer['technologies'] as $technology) {
             $technology_database = Technology::updateOrCreate([
-                'name'    => $technology['name'],
+                'name'    => (!empty($technology['name'])) ? $technology['name'] : null,
                 'slug'    => $technology['slug'],
-                'website' => $technology['website'],
-                'icon'    => $technology['icon'],
+                'website' => (!empty($technology['website'])) ? $technology['website'] : null,
+                'icon'    => (!empty($technology['icon'])) ? $technology['icon'] : null,
             ]);
             $technology_database_id = $technology_database->id;
 
@@ -65,8 +65,8 @@ class WappalyzerScrapeController extends Controller
             TechnologyPostRelation::updateOrCreate([
                 'post_id'       => $domain->id,
                 'technology_id' => $technology_database_id,
-                'confidence'    => $technology['confidence'],
-                'version'       => $technology['version'],
+                'confidence'    => (!empty($technology['confidence'])) ? $technology['confidence'] : null,
+                'version'       => (!empty($technology['version'])) ? $technology['version'] : null,
             ]);
 
             echo "(Technology Post Relations) Post id: $domain->id ---> Technology id:  $technology_database_id<br><br>";

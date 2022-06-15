@@ -30,23 +30,23 @@ class ScreenshotScrapeController extends Controller
 
         if (empty($screenshot) && 'pending' !== $status) {
             $domain->update([
-                'is_seo_analyzer' => 'discard',
+                'is_screenshot' => 'discard',
             ]);
-            echo "Something bad with analyzing seo with $domain->slug";
+            echo "Something bad with analyzing screenshot of $domain->slug";
             die;
         }
 
         if (empty($screenshot)) {
             $domain->update([
-                'is_seo_analyzer' => 'fail',
+                'is_screenshot' => 'fail',
             ]);
-            echo "Something bad with analyzing seo with $domain->slug";
+            echo "Something bad with analyzing screenshot of $domain->slug";
             die;
         }
 
         $screenshot_store = Post::updateOrCreate(['id' => $domain->id], [
-            'thumbnail' => $screenshot['thumbnail'],
-            'favicon'   => $screenshot['favicon'],
+            'thumbnail' => (!empty($screenshot['thumbnail'])) ? $screenshot['thumbnail'] : null,
+            'favicon'   => (!empty($screenshot['favicon'])) ? $screenshot['favicon'] : null,
         ]);
         $domain->update([
             'is_screenshot' => 'done',

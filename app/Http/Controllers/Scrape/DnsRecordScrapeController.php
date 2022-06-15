@@ -30,30 +30,30 @@ class DnsRecordScrapeController extends Controller
 
         if (empty($dns_records) && 'pending' !== $status) {
             $domain->update([
-                'is_seo_analyzer' => 'discard',
+                'is_dns' => 'discard',
             ]);
-            echo "Something bad with analyzing seo with $domain->slug";
+            echo "Something bad with analyzing DNS Record of $domain->slug";
             die;
         }
 
         if (empty($dns_records)) {
             $domain->update([
-                'is_seo_analyzer' => 'fail',
+                'is_dns' => 'fail',
             ]);
-            echo "Something bad with analyzing seo with $domain->slug";
+            echo "Something bad with analyzing DNS Record of $domain->slug";
             die;
         }
 
         $dns_records_store = DnsDetail::updateOrCreate(['post_id' => $domain->id], [
-            'A'     => $dns_records['A'],
-            'AAAA'  => $dns_records['AAAA'],
-            'CNAME' => $dns_records['CNAME'],
-            'NS'    => $dns_records['NS'],
-            'SOA'   => $dns_records['SOA'],
-            'MX'    => $dns_records['MX'],
-            'SRV'   => $dns_records['SRV'],
-            'TXT'   => $dns_records['TXT'],
-            'CAA'   => $dns_records['CAA'],
+            'A'     => (!empty($dns_records['A'])) ? $dns_records['A'] : null,
+            'AAAA'  => (!empty($dns_records['AAAA'])) ? $dns_records['AAAA'] : null,
+            'CNAME' => (!empty($dns_records['CNAME'])) ? $dns_records['CNAME'] : null,
+            'NS'    => (!empty($dns_records['NS'])) ? $dns_records['NS'] : null,
+            'SOA'   => (!empty($dns_records['SOA'])) ? $dns_records['SOA'] : null,
+            'MX'    => (!empty($dns_records['MX'])) ? $dns_records['MX'] : null,
+            'SRV'   => (!empty($dns_records['SRV'])) ? $dns_records['SRV'] : null,
+            'TXT'   => (!empty($dns_records['TXT'])) ? $dns_records['TXT'] : null,
+            'CAA'   => (!empty($dns_records['CAA'])) ? $dns_records['CAA'] : null,
         ]);
         $domain->update([
             'is_dns' => 'done',
@@ -62,7 +62,7 @@ class DnsRecordScrapeController extends Controller
         if (!empty($dns_records['ip'])) {
 
             Post::updateOrCreate(['id' => $domain->id], [
-                'ip' => $dns_records['ip']['ip'],
+                'ip' => (!empty($dns_records['ip']['ip'])) ? $dns_records['ip']['ip'] : null,
             ]);
 
         }

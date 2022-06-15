@@ -31,17 +31,17 @@ class WhoIsScrapeController extends Controller
 
         if (empty($whois) && 'pending' !== $status) {
             $domain->update([
-                'is_seo_analyzer' => 'discard',
+                'is_whois' => 'discard',
             ]);
-            echo "Something bad with analyzing seo with $domain->slug";
+            echo "Something bad with analyzing whois of $domain->slug";
             die;
         }
 
         if (empty($whois)) {
             $domain->update([
-                'is_seo_analyzer' => 'fail',
+                'is_whois' => 'fail',
             ]);
-            echo "Something bad with analyzing seo with $domain->slug";
+            echo "Something bad with analyzing whois of $domain->slug";
             die;
         }
 
@@ -50,16 +50,16 @@ class WhoIsScrapeController extends Controller
 
         $whois_store = WhoIsRecord::updateOrCreate(['post_id' => $domain->id], [
 
-            'text'           => $whois['text'],
-            'whoisServer'    => $whois_info['whoisServer'],
-            'nameServers'    => $whois_info['nameServers'],
-            'creationDate'   => $whois['creationDate'],
-            'expirationDate' => $whois['expirationDate'],
+            'text'           => (!empty($whois['text'])) ? $whois['text'] : null,
+            'whoisServer'    => (!empty($whois_info['whoisServer'])) ? $whois_info['whoisServer'] : null,
+            'nameServers'    => (!empty($whois_info['nameServers'])) ? $whois_info['nameServers'] : null,
+            'creationDate'   => (!empty($whois['creationDate'])) ? $whois['creationDate'] : null,
+            'expirationDate' => (!empty($whois['expirationDate'])) ? $whois['expirationDate'] : null,
             'updatedDate'    => (!empty($whois_info['updatedDate'])) ? date("Y-m-d", $whois_info['updatedDate']) : null,
-            'states'         => $whois_info['states'],
-            'owner'          => $whois['owner'],
-            'registrar'      => $whois_info['registrar'],
-            'dnssec'         => $whois_info['dnssec'],
+            'states'         => (!empty($whois_info['states'])) ? $whois_info['states'] : null,
+            'owner'          => (!empty($whois['owner'])) ? $whois['owner'] : null,
+            'registrar'      => (!empty($whois_info['registrar'])) ? $whois_info['registrar'] : null,
+            'dnssec'         => (!empty($whois_info['dnssec'])) ? $whois_info['dnssec'] : null,
         ]);
 
         $domain->update([

@@ -28,3 +28,12 @@ COMPOSER_MEMORY_LIMIT=-1 composer update
 php artisan migrate --seed
 bash install.sh
 ```
+
+alter-scrape
+wappalyzer-scrape
+ssl-scrape
+alexa-scrape
+seo-scrape
+dns-scrape
+ip-location-scrape
+screenshot-scrape

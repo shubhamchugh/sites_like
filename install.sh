@@ -11,7 +11,7 @@ sudo npm install --location=global --unsafe-perm puppeteer
 
 sudo chmod -R o+rx /usr/lib/node_modules/puppeteer/.local-chromium
 
-sudo  npm i -g wappalyzer--unsafe-perm=true --allow-root
+sudo  npm i -g wappalyzer --unsafe-perm=true --allow-root
 
 sudo npm install
 
