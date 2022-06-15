@@ -34,37 +34,46 @@ class WappalyzerScrapeController extends Controller
 
         $wappalyzer = json_decode($wappalyzer, true);
 
-        if (!empty($wappalyzer['technologies'])) {
-            echo "<h1>Technology in DataBase</h1>";
-            foreach ($wappalyzer['technologies'] as $technology) {
-                $technology_database = Technology::updateOrCreate([
-                    'name'    => $technology['name'],
-                    'slug'    => $technology['slug'],
-                    'website' => $technology['website'],
-                    'icon'    => $technology['icon'],
-                ]);
-                $technology_database_id = $technology_database->id;
-
-                echo "$technology_database->id: $technology_database->name<br>";
-
-                TechnologyPostRelation::updateOrCreate([
-                    'post_id'       => $domain->id,
-                    'technology_id' => $technology_database_id,
-                    'confidence'    => $technology['confidence'],
-                    'version'       => $technology['version'],
-                ]);
-
-                echo "(Technology Post Relations) Post id: $domain->id ---> Technology id:  $technology_database_id<br><br>";
-            }
+        if (empty($wappalyzer['technologies']) && 'pending' !== $status) {
             $domain->update([
-                'is_wappalyzer' => 'done',
+                'is_seo_analyzer' => 'discard',
             ]);
-        } else {
-            $domain->update([
-                'is_wappalyzer' => 'fail',
-            ]);
-            echo "something bad with finding technology for $domain->slug";
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
         }
+
+        if (empty($wappalyzer['technologies'])) {
+            $domain->update([
+                'is_seo_analyzer' => 'fail',
+            ]);
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
+        }
+
+        echo "<h1>Technology in DataBase</h1>";
+        foreach ($wappalyzer['technologies'] as $technology) {
+            $technology_database = Technology::updateOrCreate([
+                'name'    => $technology['name'],
+                'slug'    => $technology['slug'],
+                'website' => $technology['website'],
+                'icon'    => $technology['icon'],
+            ]);
+            $technology_database_id = $technology_database->id;
+
+            echo "$technology_database->id: $technology_database->name<br>";
+
+            TechnologyPostRelation::updateOrCreate([
+                'post_id'       => $domain->id,
+                'technology_id' => $technology_database_id,
+                'confidence'    => $technology['confidence'],
+                'version'       => $technology['version'],
+            ]);
+
+            echo "(Technology Post Relations) Post id: $domain->id ---> Technology id:  $technology_database_id<br><br>";
+        }
+        $domain->update([
+            'is_wappalyzer' => 'done',
+        ]);
 
     }
 }

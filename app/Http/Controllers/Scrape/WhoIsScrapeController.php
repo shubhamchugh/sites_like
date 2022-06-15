@@ -29,34 +29,43 @@ class WhoIsScrapeController extends Controller
 
         $whois = whois($domain->slug);
 
-        if (!empty($whois)) {
-            $whois_info = $whois['info'];
-            $whois_info = $whois_info->toArray();
-
-            $whois_store = WhoIsRecord::updateOrCreate(['post_id' => $domain->id], [
-
-                'text'           => $whois['text'],
-                'whoisServer'    => $whois_info['whoisServer'],
-                'nameServers'    => $whois_info['nameServers'],
-                'creationDate'   => $whois['creationDate'],
-                'expirationDate' => $whois['expirationDate'],
-                'updatedDate'    => (!empty($whois_info['updatedDate'])) ? date("Y-m-d", $whois_info['updatedDate']) : null,
-                'states'         => $whois_info['states'],
-                'owner'          => $whois['owner'],
-                'registrar'      => $whois_info['registrar'],
-                'dnssec'         => $whois_info['dnssec'],
-            ]);
-
+        if (empty($whois) && 'pending' !== $status) {
             $domain->update([
-                'is_whois' => 'done',
+                'is_seo_analyzer' => 'discard',
             ]);
-            return $whois_store;
-        } else {
-            $domain->update([
-                'is_whois' => 'fail',
-            ]);
-            echo "Something Bad with whois for $domain->slug";
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
         }
+
+        if (empty($whois)) {
+            $domain->update([
+                'is_seo_analyzer' => 'fail',
+            ]);
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
+        }
+
+        $whois_info = $whois['info'];
+        $whois_info = $whois_info->toArray();
+
+        $whois_store = WhoIsRecord::updateOrCreate(['post_id' => $domain->id], [
+
+            'text'           => $whois['text'],
+            'whoisServer'    => $whois_info['whoisServer'],
+            'nameServers'    => $whois_info['nameServers'],
+            'creationDate'   => $whois['creationDate'],
+            'expirationDate' => $whois['expirationDate'],
+            'updatedDate'    => (!empty($whois_info['updatedDate'])) ? date("Y-m-d", $whois_info['updatedDate']) : null,
+            'states'         => $whois_info['states'],
+            'owner'          => $whois['owner'],
+            'registrar'      => $whois_info['registrar'],
+            'dnssec'         => $whois_info['dnssec'],
+        ]);
+
+        $domain->update([
+            'is_whois' => 'done',
+        ]);
+        return $whois_store;
 
     }
 }

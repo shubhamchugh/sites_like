@@ -50,13 +50,13 @@ class PostPageController extends Controller
         $title = (!empty($post->title)) ? $post->title : ($settings['title_prefix'] . ' ' . ucwords($post->slug) . ' ' . $settings['title_suffix']);
 
         SEOTools::setTitle($title);
-        SEOTools::setDescription($post->seo_analyzers_relation->domain_description);
+        SEOTools::setDescription(optional($post->seo_analyzers_relation)->domain_description);
         SEOTools::opengraph()->setUrl(URL::current());
         SEOMeta::addMeta('article:published_time', $post->updated_at->toW3CString(), 'property');
         SEOTools::setCanonical(URL::current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::jsonLd()->addImage("https://s3.us-west-1.wasabisys.com/" . config('filesystems.disks.wasabi.bucket') . "/scrape/thumbnail/" . $post->thumbnail);
-        SEOMeta::setKeywords($post->seo_analyzers_relation->longTailKeywords);
+        SEOMeta::setKeywords(optional($post->seo_analyzers_relation)->longTailKeywords);
         //SEO END FOR POST PAGE
 
         return view('themes.manvendra.content.post',

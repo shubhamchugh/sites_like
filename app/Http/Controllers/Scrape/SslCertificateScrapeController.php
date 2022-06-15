@@ -29,27 +29,37 @@ class SslCertificateScrapeController extends Controller
 
         $ssl = sslCertificate($domain->slug);
 
-        if (!empty($ssl)) {
-            $ssl_store = SslCertificate::updateOrCreate(['post_id' => $domain->id], [
-                'issuer'                => $ssl['getIssuer'],
-                'getSignatureAlgorithm' => $ssl['getSignatureAlgorithm'],
-                'getOrganization'       => $ssl['getOrganization'],
-                'getAdditionalDomains'  => $ssl['getAdditionalDomains'],
-                'getFingerprint'        => $ssl['getFingerprint'],
-                'getFingerprintSha256'  => $ssl['getFingerprintSha256'],
-                'validFromDate'         => $ssl['validFromDate'],
-                'expirationDate'        => $ssl['expirationDate'],
-                'isValid'               => $ssl['isValid'],
-            ]);
+        if (empty($ssl) && 'pending' !== $status) {
             $domain->update([
-                'is_ssl' => 'done',
+                'is_seo_analyzer' => 'discard',
             ]);
-            return $ssl_store;
-        } else {
-            $domain->update([
-                'is_ssl' => 'fail',
-            ]);
-            echo "Something Bad with $domain->slug SSL";
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
         }
+
+        if (empty($ssl)) {
+            $domain->update([
+                'is_seo_analyzer' => 'fail',
+            ]);
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
+        }
+
+        $ssl_store = SslCertificate::updateOrCreate(['post_id' => $domain->id], [
+            'issuer'                => $ssl['getIssuer'],
+            'getSignatureAlgorithm' => $ssl['getSignatureAlgorithm'],
+            'getOrganization'       => $ssl['getOrganization'],
+            'getAdditionalDomains'  => $ssl['getAdditionalDomains'],
+            'getFingerprint'        => $ssl['getFingerprint'],
+            'getFingerprintSha256'  => $ssl['getFingerprintSha256'],
+            'validFromDate'         => $ssl['validFromDate'],
+            'expirationDate'        => $ssl['expirationDate'],
+            'isValid'               => $ssl['isValid'],
+        ]);
+        $domain->update([
+            'is_ssl' => 'done',
+        ]);
+        return $ssl_store;
+
     }
 }

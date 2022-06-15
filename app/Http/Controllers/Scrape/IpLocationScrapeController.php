@@ -30,22 +30,31 @@ class IpLocationScrapeController extends Controller
 
         $ip_location = Location::get($domain->ip);
 
-        if ($ip_location) {
-            $ip_location_store = IpRecord::updateOrCreate(['post_id' => $domain->id], [
-                'country_name' => $ip_location->countryName,
-                'country_code' => $ip_location->countryCode,
-            ]);
-
+        if (empty($ip_location) && 'pending' !== $status) {
             $domain->update([
-                'is_ip_location' => 'done',
+                'is_seo_analyzer' => 'discard',
             ]);
-            return $ip_location_store;
-        } else {
-            $domain->update([
-                'is_ip_location' => 'fail',
-            ]);
-            echo "something bad with this $domain->slug Ip Address location";
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
         }
+
+        if (empty($ip_location)) {
+            $domain->update([
+                'is_seo_analyzer' => 'fail',
+            ]);
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
+        }
+
+        $ip_location_store = IpRecord::updateOrCreate(['post_id' => $domain->id], [
+            'country_name' => $ip_location->countryName,
+            'country_code' => $ip_location->countryCode,
+        ]);
+
+        $domain->update([
+            'is_ip_location' => 'done',
+        ]);
+        return $ip_location_store;
 
     }
 }

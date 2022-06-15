@@ -29,26 +29,34 @@ class AlexaRankScrapeController extends Controller
 
         $alexa = alexa_rank($domain->slug);
 
-        if (!empty($alexa)) {
-            $alexa_detail_store = Attribute::updateOrCreate(['post_id' => $domain->id], [
-                'alexa_rank'         => $alexa['globalRank'][0],
-                'alexa_country'      => $alexa['CountryRank']['@attributes']['NAME'],
-                'alexa_country_code' => $alexa['CountryRank']['@attributes']['CODE'],
-                'alexa_country_rank' => $alexa['CountryRank']['@attributes']['RANK'],
-            ]);
-
+        if (empty($alexa) && 'pending' !== $status) {
             $domain->update([
-                'is_alexa' => 'done',
+                'is_seo_analyzer' => 'discard',
             ]);
-
-            return $alexa_detail_store;
-        } else {
-            $domain->update([
-                'is_alexa' => 'fail',
-            ]);
-
-            echo "Alexa rank Not Found Please refresh and check Next record";
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
         }
+
+        if (empty($alexa)) {
+            $domain->update([
+                'is_seo_analyzer' => 'fail',
+            ]);
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
+        }
+
+        $alexa_detail_store = Attribute::updateOrCreate(['post_id' => $domain->id], [
+            'alexa_rank'         => $alexa['globalRank'][0],
+            'alexa_country'      => $alexa['CountryRank']['@attributes']['NAME'],
+            'alexa_country_code' => $alexa['CountryRank']['@attributes']['CODE'],
+            'alexa_country_rank' => $alexa['CountryRank']['@attributes']['RANK'],
+        ]);
+
+        $domain->update([
+            'is_alexa' => 'done',
+        ]);
+
+        return $alexa_detail_store;
 
     }
 }

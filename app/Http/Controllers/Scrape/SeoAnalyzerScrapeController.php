@@ -29,30 +29,38 @@ class SeoAnalyzerScrapeController extends Controller
 
         $seoAnalyzer = seoAnalyzer($domain->slug);
 
-        if (!empty($seoAnalyzer)) {
-
-            $seo_analyzer_store = SeoAnalyzer::updateOrCreate(['post_id' => $domain->id], [
-                'language'           => $seoAnalyzer['language'],
-                'loadtime'           => $seoAnalyzer['loadtime'],
-                'codeToTxtRatio'     => $seoAnalyzer['full_page']['codeToTxtRatio']['ratio'],
-                'word_count'         => $seoAnalyzer['full_page']['word_count'],
-                'keywords'           => $seoAnalyzer['full_page']['keywords'],
-                'longTailKeywords'   => $seoAnalyzer['full_page']['longTailKeywords'],
-                'headers'            => $seoAnalyzer['full_page']['headers'],
-                'links'              => $seoAnalyzer['full_page']['links'],
-                'images'             => $seoAnalyzer['full_page']['images'],
-                'domain_title'       => $seoAnalyzer['title'],
-                'domain_description' => $seoAnalyzer['description'],
-            ]);
+        if (empty($seoAnalyzer) && 'pending' !== $status) {
             $domain->update([
-                'is_seo_analyzer' => 'done',
+                'is_seo_analyzer' => 'discard',
             ]);
-            return $seo_analyzer_store;
-        } else {
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
+        }
+
+        if (empty($seoAnalyzer)) {
             $domain->update([
                 'is_seo_analyzer' => 'fail',
             ]);
             echo "Something bad with analyzing seo with $domain->slug";
+            die;
         }
+
+        $seo_analyzer_store = SeoAnalyzer::updateOrCreate(['post_id' => $domain->id], [
+            'language'           => $seoAnalyzer['language'],
+            'loadtime'           => $seoAnalyzer['loadtime'],
+            'codeToTxtRatio'     => $seoAnalyzer['full_page']['codeToTxtRatio']['ratio'],
+            'word_count'         => $seoAnalyzer['full_page']['word_count'],
+            'keywords'           => $seoAnalyzer['full_page']['keywords'],
+            'longTailKeywords'   => $seoAnalyzer['full_page']['longTailKeywords'],
+            'headers'            => $seoAnalyzer['full_page']['headers'],
+            'links'              => $seoAnalyzer['full_page']['links'],
+            'images'             => $seoAnalyzer['full_page']['images'],
+            'domain_title'       => $seoAnalyzer['title'],
+            'domain_description' => $seoAnalyzer['description'],
+        ]);
+        $domain->update([
+            'is_seo_analyzer' => 'done',
+        ]);
+        return $seo_analyzer_store;
     }
 }

@@ -28,21 +28,30 @@ class ScreenshotScrapeController extends Controller
 
         $screenshot = Get_Screenshot::screenshot_wasabi($domain->slug);
 
-        if (!empty($screenshot)) {
-            $screenshot_store = Post::updateOrCreate(['id' => $domain->id], [
-                'thumbnail' => $screenshot['thumbnail'],
-                'favicon'   => $screenshot['favicon'],
-            ]);
+        if (empty($screenshot) && 'pending' !== $status) {
             $domain->update([
-                'is_screenshot' => 'done',
+                'is_seo_analyzer' => 'discard',
             ]);
-            return $screenshot_store;
-        } else {
-            $domain->update([
-                'is_screenshot' => 'fail',
-            ]);
-            echo "something bad with taking Screenshot $domain->slug";
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
         }
+
+        if (empty($screenshot)) {
+            $domain->update([
+                'is_seo_analyzer' => 'fail',
+            ]);
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
+        }
+
+        $screenshot_store = Post::updateOrCreate(['id' => $domain->id], [
+            'thumbnail' => $screenshot['thumbnail'],
+            'favicon'   => $screenshot['favicon'],
+        ]);
+        $domain->update([
+            'is_screenshot' => 'done',
+        ]);
+        return $screenshot_store;
 
     }
 }

@@ -28,29 +28,36 @@ class DnsRecordScrapeController extends Controller
 
         $dns_records = dns_records($domain->slug);
 
-        if (!empty($dns_records)) {
-            $dns_records_store = DnsDetail::updateOrCreate(['post_id' => $domain->id], [
-                'A'     => $dns_records['A'],
-                'AAAA'  => $dns_records['AAAA'],
-                'CNAME' => $dns_records['CNAME'],
-                'NS'    => $dns_records['NS'],
-                'SOA'   => $dns_records['SOA'],
-                'MX'    => $dns_records['MX'],
-                'SRV'   => $dns_records['SRV'],
-                'TXT'   => $dns_records['TXT'],
-                'CAA'   => $dns_records['CAA'],
-            ]);
+        if (empty($dns_records) && 'pending' !== $status) {
             $domain->update([
-                'is_dns' => 'done',
+                'is_seo_analyzer' => 'discard',
             ]);
-
-        } else {
-            $domain->update([
-                'is_dns' => 'fail',
-            ]);
-            echo "Something bad with Dns record of $domain ->slug";
+            echo "Something bad with analyzing seo with $domain->slug";
             die;
         }
+
+        if (empty($dns_records)) {
+            $domain->update([
+                'is_seo_analyzer' => 'fail',
+            ]);
+            echo "Something bad with analyzing seo with $domain->slug";
+            die;
+        }
+
+        $dns_records_store = DnsDetail::updateOrCreate(['post_id' => $domain->id], [
+            'A'     => $dns_records['A'],
+            'AAAA'  => $dns_records['AAAA'],
+            'CNAME' => $dns_records['CNAME'],
+            'NS'    => $dns_records['NS'],
+            'SOA'   => $dns_records['SOA'],
+            'MX'    => $dns_records['MX'],
+            'SRV'   => $dns_records['SRV'],
+            'TXT'   => $dns_records['TXT'],
+            'CAA'   => $dns_records['CAA'],
+        ]);
+        $domain->update([
+            'is_dns' => 'done',
+        ]);
 
         if (!empty($dns_records['ip'])) {
 
