@@ -26,4 +26,5 @@ git reset --hard
 git pull
 COMPOSER_MEMORY_LIMIT=-1 composer update
 php artisan migrate --seed
+bash install.sh
 ```
