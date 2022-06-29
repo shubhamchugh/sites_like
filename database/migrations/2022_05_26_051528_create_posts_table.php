@@ -18,13 +18,13 @@ class CreatePostsTable extends Migration
             $table->string('title')->index()->nullable();
             $table->string('slug')->unique();
             $table->string('ip')->index()->nullable();
-            $table->string('status')->index()->default('unpublish');
+            $table->string('status')->default('unpublish');
             $table->string('post_type', 50)->default('listing');
             $table->string('up_down')->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('favicon')->nullable();
             $table->text('content')->nullable();
-            $table->bigInteger('page_views')->index()->default('0');
+            $table->bigInteger('page_views')->default('0');
             $table->boolean('is_index_google')->index()->default('0');
             $table->boolean('is_index_bing')->index()->default('0');
             $table->string('is_wappalyzer')->index()->default('pending');
@@ -37,6 +37,8 @@ class CreatePostsTable extends Migration
             $table->string('is_screenshot')->index()->default('pending');
             $table->softDeletes();
             $table->timestamps();
+            $table->index('updated_at');
+            $table->index('created_at');
         });
     }
 

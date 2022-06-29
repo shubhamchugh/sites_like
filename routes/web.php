@@ -11,6 +11,7 @@ use App\Http\Controllers\Scrape\WhoIsScrapeController;
 use App\Http\Controllers\Frontend\ContentPageController;
 use App\Http\Controllers\Scrape\AlexaRankScrapeController;
 use App\Http\Controllers\Scrape\DnsRecordScrapeController;
+use App\Http\Controllers\Scrape\DuplicateCheckerController;
 use App\Http\Controllers\Scrape\IpLocationScrapeController;
 use App\Http\Controllers\Scrape\ScreenshotScrapeController;
 use App\Http\Controllers\Scrape\WappalyzerScrapeController;
@@ -42,6 +43,8 @@ Route::get('whois-scrape', [WhoIsScrapeController::class, 'who_is_scrape']);
 Route::get('dns-scrape', [DnsRecordScrapeController::class, 'dns_record_scrape']);
 Route::get('ip-location-scrape', [IpLocationScrapeController::class, 'ip_location_scrape']);
 Route::get('screenshot-scrape', [ScreenshotScrapeController::class, 'screenshot_scrape']);
+
+Route::get('duplicate-check', [DuplicateCheckerController::class, 'publish_duplicate']);
 
 // Route::get('scrape', [FullScrapingController::class, 'scrape']);
 

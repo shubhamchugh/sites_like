@@ -185,16 +185,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.225.3",
+            "version": "3.225.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "ee717ffeb6d7c6bd0278b51b9f070b3571ac4eb0"
+                "reference": "ddfe35918317380245c376a3b2b97b7428135ae1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ee717ffeb6d7c6bd0278b51b9f070b3571ac4eb0",
-                "reference": "ee717ffeb6d7c6bd0278b51b9f070b3571ac4eb0",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ddfe35918317380245c376a3b2b97b7428135ae1",
+                "reference": "ddfe35918317380245c376a3b2b97b7428135ae1",
                 "shasum": ""
             },
             "require": {
@@ -270,9 +270,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.225.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.225.4"
             },
-            "time": "2022-06-13T18:56:48+00:00"
+            "time": "2022-06-14T18:32:31+00:00"
         },
         {
             "name": "box/spout",
@@ -2652,17 +2652,17 @@
         },
         {
             "name": "laravel/nova",
-            "version": "4.8.1",
+            "version": "4.9.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
-                "reference": "022293753437ce057804701db0896c2ed01c3782"
+                "reference": "382d1630ef180a6d36fc563c0da5f7fa3b3f6284"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-022293753437ce057804701db0896c2ed01c3782-zip-b7e828.zip",
-                "reference": "022293753437ce057804701db0896c2ed01c3782",
-                "shasum": "f1a18dea34879001a6a520b6d3f8fce216b75dd6"
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-382d1630ef180a6d36fc563c0da5f7fa3b3f6284-zip-0e89d5.zip",
+                "reference": "382d1630ef180a6d36fc563c0da5f7fa3b3f6284",
+                "shasum": "5d926e14114ebbf292c98653edea73f9b62f4aa3"
             },
             "require": {
                 "brick/money": "^0.5.0",
@@ -2755,9 +2755,9 @@
                 "laravel"
             ],
             "support": {
-                "source": "https://github.com/laravel/nova/tree/v4.8.1"
+                "source": "https://github.com/laravel/nova/tree/v4.9.0"
             },
-            "time": "2022-06-08T18:40:31+00:00"
+            "time": "2022-06-14T18:08:11+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -6751,16 +6751,16 @@
         },
         {
             "name": "stepanenko3/nova-logs-tool",
-            "version": "v1.2.2",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stepanenko3/nova-logs-tool.git",
-                "reference": "ea133514f75fa26ae2efd5a49fbf6be1b9ca649f"
+                "reference": "5d27a5c1a9434fb40059f71c24747b50ed38bfae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stepanenko3/nova-logs-tool/zipball/ea133514f75fa26ae2efd5a49fbf6be1b9ca649f",
-                "reference": "ea133514f75fa26ae2efd5a49fbf6be1b9ca649f",
+                "url": "https://api.github.com/repos/stepanenko3/nova-logs-tool/zipball/5d27a5c1a9434fb40059f71c24747b50ed38bfae",
+                "reference": "5d27a5c1a9434fb40059f71c24747b50ed38bfae",
                 "shasum": ""
             },
             "require": {
@@ -6804,9 +6804,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stepanenko3/nova-logs-tool/issues",
-                "source": "https://github.com/stepanenko3/nova-logs-tool/tree/v1.2.2"
+                "source": "https://github.com/stepanenko3/nova-logs-tool/tree/v1.2.3"
             },
-            "time": "2022-05-17T06:32:36+00:00"
+            "time": "2022-06-15T07:53:49+00:00"
         },
         {
             "name": "stevebauman/location",
